@@ -1,0 +1,66 @@
+.footer {
+display: flex;
+flex-direction: row;
+justify-content: space-around;
+align-items: center;
+overflow: hidden;
+font-family: 'Reggae One', cursive;
+
+width: 100vw;
+height: 230px;
+
+
+background-color: #ffc74d;
+}
+
+.footer_left  {
+
+display: flex;
+justify-content: center;
+flex-direction: column;
+gap:9px;
+}
+
+.footer_left_title {
+font-size: 50px;
+}
+.footer_left_title_logo {
+display: flex;
+justify-content: center;   
+}
+
+.footer_center a {
+text-decoration: none;
+color: black;
+font-size: 22px;
+}
+
+.footer_center {
+height:40%; 
+display: flex;
+justify-content: space-between;
+align-items: center;
+gap: 200px;
+}
+.footer_center_right {
+display: flex;
+flex-direction: column;
+justify-content: center;    
+}
+.footer_center_left {
+display: flex;
+flex-direction: column;
+justify-content: center;       
+}
+
+.footer_right_contacts{
+display: flex;
+flex-direction: column;
+gap:10px;    
+}
+.footer_right_contacts_label {
+font-size: 35px;    
+}
+.footer_right_contacts_number {
+font-size: 20px;    
+}

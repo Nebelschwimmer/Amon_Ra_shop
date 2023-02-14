@@ -1,0 +1,41 @@
+.sort_nav {
+display: flex;
+flex-direction: row;
+align-items: center;
+padding: 16px;
+gap: 30px;
+text-align: center;
+margin-bottom: 15px;
+width: 992px;
+height: 25px;
+
+/* Text/White
+
+FFFFFF
+*/
+background: #FFFFFF;
+
+/* Elevation / 04 */
+box-shadow: 0px 2px 4px rgba(40, 41, 61, 0.04), 0px 8px 16px rgba(96, 97, 112, 0.16);
+border-radius: 12px;
+
+}
+
+.sort_item{
+
+font-family: 'Raleway', sans-serif;
+font-weight: 500;
+font-size: 16px;
+line-height: 30px;
+padding:5px;
+transition: ease-in 0,5s;
+
+
+}
+.sort_item:hover{
+color:rgb(139, 94, 10);
+cursor: pointer;
+box-shadow: rgb(248, 230, 197) 0px 0px 1px 1px;
+border-radius: 5px;
+    
+    }

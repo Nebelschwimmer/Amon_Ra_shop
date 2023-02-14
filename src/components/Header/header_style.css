@@ -1,0 +1,71 @@
+.header {
+  width: 100vw;
+  background-color: #ffc74d;
+  padding: 12px 0;
+}
+.header__wrapper {
+  display: flex;
+  align-items:flex-end;
+  width: auto;
+ 
+  gap: 80px;
+}
+.header__left {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  
+}
+.header__title {
+font-family: 'Reggae One', cursive;
+font-size: 65px;
+width: 360px;
+color: rgb(116, 56, 7)
+}
+.header_title_description {
+  font-family: 'Reggae One', cursive;
+  font-size: 25px; 
+}
+.header_auth_buttons {
+width:20%;
+display: flex;
+flex-direction: row;
+gap: 10px;
+display: flex;
+flex-direction: column;
+margin-bottom:56px;
+}
+
+.button_sign{
+background-color:#e7ac2d;
+border: solid 1px black;
+height: 35px;
+width: 120px;
+padding: 5px;
+border-radius: 10px;
+font-size: 15px;
+transition: ease-in 0.1s;
+
+}
+.button_sign:hover{
+  background-color:#ffedc6;
+  border: solid 2px black;
+  box-shadow: 1px 1px 1px 1px  black;
+
+  
+  }
+
+
+
+
+
+
+
+@media (max-width: 700px) {
+  .header__wrapper {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 20px;
+  }
+}
+
