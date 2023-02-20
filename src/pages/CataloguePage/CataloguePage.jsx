@@ -1,3 +1,4 @@
+import { fontSize } from '@mui/system';
 import { CardList } from '../../components/CardList/CardList';
 import { Sort_nav } from '../../components/Sort_nav/Sort_nav';
 import { getIssues } from '../../utils/utils';
@@ -6,8 +7,8 @@ export const CataloguePage = ({searchQuery, items, currentUser, handleProductLik
   return <>
       <Sort_nav/>
       {searchQuery && (
-          <p>
-            По запросу {searchQuery} найдено {items.length}
+          <p style={{fontSize: '22px'}}>
+            По запросу {searchQuery} найден(о) {items.length}
             {getIssues(items.length)}
           </p>
         )}

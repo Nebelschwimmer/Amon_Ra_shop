@@ -37,13 +37,6 @@ const config = {
         headers: this._headers,
       }).then((res) => onResponse(res));
     }
-    // like - true / false
-    changeLikeProductStatus(productId, like) {
-      return fetch(`${this._baseUrl}/products/likes/${productId}`, {
-        headers: this._headers,
-        method: like ? 'PUT' : 'DELETE',
-      }).then((res) => onResponse(res));
-    }
     deleteLike(productId) {
       return fetch(`${this._baseUrl}/products/likes/${productId}`, {
         headers: this._headers,

@@ -1,0 +1,23 @@
+.categories_container{
+position: absolute;
+left:45px;
+top:225px;    
+
+font-family: 'Reggae One', cursive;
+line-height: 46px;
+font-size: 25px;
+border: 2px black solid;
+border-radius: 30px;
+width: 350px;
+padding: 10px 30px 20px 50px;
+
+}
+
+
+.categories_item{
+font-size: 20px;
+cursor: pointer;
+}
+.categories_item:hover{
+    color: rgb(134, 43, 1);
+    }

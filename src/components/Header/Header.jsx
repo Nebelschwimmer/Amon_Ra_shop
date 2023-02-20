@@ -3,8 +3,9 @@ import { Logo } from '../Logo/Logo';
 import { Search } from '../Search/Search';
 import './header_style.css';
 import { api } from '../../utils/api';
-
 import IconCart from './Cart/cart';
+import IconLogin from './Login_button/login_button'
+import IconLogout from './Logout_button/logout_button'
 export const Header = ({ setSearchQuery, searchQuery, parentCounter, user }) => {
 
 const [counter, setCartCounter] = useState(parentCounter);
@@ -32,16 +33,20 @@ const [counter, setCartCounter] = useState(parentCounter);
             </div>
             <Search  searchQuery={searchQuery} setSearchQuery={setSearchQuery}/>    
         </div>
-        <IconCart count={counter}/>
-        <div className = 'header_auth_buttons'>
-          <button className = 'button_sign'>Войти</button>
-          <button className =' button_sign'>Регистрация</button>
+        <div className = 'header_user_buttons'>
+          <IconCart count={counter}/>
+          <IconLogin/>
+          
+        </div>
+        <div className='user_info_wrapper'>
+            <span className='user_info'>{user.name}, {' '} {user.about} </span>
+           <IconLogout/>
+        </div>
+        <div className = 'header_admin_buttons'>
+        
           <button className='button_add' onClick={() => addProductOnClick()}>Добавить товар</button>
           <button className =' button_change_user_info' onClick={() => changeUserInfoOnClick()} >Изменить данные пользователя</button>
-          <div className='user_info_wrapper'><em>Вы вошли как: </em>
-            
-            <span className='user_info'>{user.name}, {' '} {user.about} </span>
-          </div>
+          
         </div>  
       </div>  
   </div>

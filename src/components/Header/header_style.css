@@ -1,27 +1,28 @@
 .header {
   background-color: #ffc74d;
   padding: 12px 0px;
-  height: 190px;
+  height: 160px;
   box-shadow: 2px 1px rgb(224, 190, 110); 
+
 }
 .header__wrapper {
   display: flex;
   align-items:safe;
   width: auto;
   justify-content: space-around;
- 
- 
   gap: 80px;
+  padding-right: 30px;
 }
 .header__left {
   display: flex;
   align-items: center;
   gap: 20px;
-  
+  padding-left: 30px;  
 }
 .header__title {
 font-family: 'Reggae One', cursive;
 font-size: 55px;
+
 width: 360px;
 color: rgb(186, 59, 0);
 text-shadow: black 1px 1px;
@@ -30,11 +31,11 @@ text-shadow: black 1px 1px;
   font-family: 'Reggae One', cursive;
   font-size: 20px; 
 }
-.header_auth_buttons {
+.header_admin_buttons {
 width:20%;
-display: grid;
-grid-template-columns: repeat(2, 200px);
-gap: 5px;
+display: flex;
+flex-direction: column;
+gap: 10px;
 font-size: 13px;
 margin-top: 65px;
 
@@ -87,17 +88,27 @@ transition: ease-in 0.1s;
 }
 
 .user_info_wrapper {
-padding:10px;
-border: 1px dashed black;
-margin-top: 10px;
-width: 430px;
-font-size: 18px;
-font-weight: 600;  
-margin-bottom: 10px;
+  padding:10px;
+  margin-top: 60px;
+  width: 430px;
+  font-size: 17px;
+  font-weight: 600;  
+  display: flex;
+  gap:10px;
+  align-items: center;
+  position: relative;
+  top:10px;
+
 
 }
 
+.header_user_buttons {
+  display: flex;
+  flex-direction: row;
+  position: relative;
+  top:80px
 
+}
 
 
 

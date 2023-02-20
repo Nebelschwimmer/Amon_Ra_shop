@@ -7,7 +7,7 @@ import { useDebounce } from '../../utils/utils';
 import { Route, Routes } from 'react-router-dom';
 import { ProductPage } from '../../pages/ProductPage/ProductPage';
 import { CataloguePage} from '../../pages/CataloguePage/CataloguePage';
-
+import { Categories } from '../Categories/categories';
 
 function App() {
 // Добавление use-state
@@ -28,11 +28,11 @@ function App() {
     const isLiked = product.likes.some((el) => el === currentUser._id);
     isLiked 
     ? api.deleteLike(product._id).then((newItem)=>{
-        const newItems = items.map((e)=> e._id === newItem._id ? newItem : e);
+        const newItems = items.map((el)=> el._id === newItem._id ? newItem : el);
         setItems([...newItems]);
     })
     : api.addLike(product._id).then((newItem)=>{
-      const newItems = items.map((e)=> e._id === newItem._id ? newItem : e);
+      const newItems = items.map((el)=> el._id === newItem._id ? newItem : el);
       setItems([...newItems]);
   });
   }
@@ -48,7 +48,6 @@ useEffect(() => {
     Promise.all([api.getUserInfo(), api.getProductList()]).then(
       ([userData, productData]) => {
         setCurrentUser(userData);
-        
         setItems(productData.products)
       }
     );
