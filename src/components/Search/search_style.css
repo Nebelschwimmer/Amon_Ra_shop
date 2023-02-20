@@ -3,12 +3,14 @@
 	align-items: center;
 	position: relative;
 	flex: 1;
+	
 }
 
 .search__input {
-	width: 70%;
+	width: 500px;
 	border-radius: 24px;
-	border: 1px solid transparent;
+	border: 2px solid transparent;
+	opacity:0.8;
 	outline: none;
 	padding: 13px 60px 13px 20px;
 	color: #000;
@@ -16,10 +18,12 @@
 	line-height: 20px;
 	caret-color: #FEBA0C;
 	height:16px;
+	margin-top:70px;
+	box-shadow: #7B8E98 1px 1px 2px 0px;
 }
 .search__input:focus {
 	background: #FFFFFF;
-	border: 1px solid #FED700;
+	border: 1px solid #fe8700;
 }
 
 .search__input::placeholder {

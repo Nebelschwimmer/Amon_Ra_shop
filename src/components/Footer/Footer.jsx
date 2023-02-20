@@ -1,7 +1,5 @@
 import './footer_style.css'
 import { Logo } from '../Logo/Logo';
-import { faHome } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 export const Footer = () => {
   return (
     <div className='footer'>

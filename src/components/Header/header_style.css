@@ -1,12 +1,15 @@
 .header {
-  width: 100vw;
   background-color: #ffc74d;
-  padding: 12px 0;
+  padding: 12px 0px;
+  height: 190px;
+  box-shadow: 2px 1px rgb(224, 190, 110); 
 }
 .header__wrapper {
   display: flex;
-  align-items:flex-end;
+  align-items:safe;
   width: auto;
+  justify-content: space-around;
+ 
  
   gap: 80px;
 }
@@ -18,29 +21,30 @@
 }
 .header__title {
 font-family: 'Reggae One', cursive;
-font-size: 65px;
+font-size: 55px;
 width: 360px;
-color: rgb(116, 56, 7)
+color: rgb(186, 59, 0);
+text-shadow: black 1px 1px;
 }
 .header_title_description {
   font-family: 'Reggae One', cursive;
-  font-size: 25px; 
+  font-size: 20px; 
 }
 .header_auth_buttons {
 width:20%;
-display: flex;
-flex-direction: row;
-gap: 10px;
-display: flex;
-flex-direction: column;
-margin-bottom:56px;
+display: grid;
+grid-template-columns: repeat(2, 200px);
+gap: 5px;
+font-size: 13px;
+margin-top: 65px;
+
 }
 
 .button_sign{
 background-color:#e7ac2d;
 border: solid 1px black;
-height: 35px;
-width: 120px;
+height: 30px;
+width: 150px;
 padding: 5px;
 border-radius: 10px;
 font-size: 15px;
@@ -48,12 +52,51 @@ transition: ease-in 0.1s;
 
 }
 .button_sign:hover{
-  background-color:#ffedc6;
-  border: solid 2px black;
-  box-shadow: 1px 1px 1px 1px  black;
+  background-color:rgba(248, 174, 14, 0.5);
+  box-shadow: 1px 1px 1px 1px  black; 
+}
 
+.button_add {
+  background-color:#e7ac2d;
+  border: solid 1px black;
+  height: 30px;
+  width: 150px;
+  padding: 5px;
+  border-radius: 10px;
+  font-size: 15px;
+  transition: ease-in 0.1s;
+}
+.button_add:hover{
+  background-color:rgba(248, 174, 14, 0.5);
+  box-shadow: 1px 1px 1px 1px  black; 
+}
+
+.button_change_user_info {
+  background-color:#e7ac2d;
+  border: solid 1px black;
+  height: 30px;
+  width: 250px;
   
-  }
+  border-radius: 10px;
+  font-size: 15px;
+  transition: ease-in 0.1s;  
+}
+.button_change_user_info:hover {
+  background-color:rgba(248, 174, 14, 0.5);
+  box-shadow: 1px 1px 1px 1px  black;  
+}
+
+.user_info_wrapper {
+padding:10px;
+border: 1px dashed black;
+margin-top: 10px;
+width: 430px;
+font-size: 18px;
+font-weight: 600;  
+margin-bottom: 10px;
+
+}
+
 
 
 

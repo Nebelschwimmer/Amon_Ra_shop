@@ -1,15 +1,23 @@
 import { Card } from '../Card/Card';
 import './index.css';
-import data from '../../data/data.json';
-import { useEffect, useState } from 'react';
 
-export const CardList = ({ items }) => {
+export const CardList = ({  currentUser,
+  items,
+  setParentCounter,
+  handleProductLike, }) => {
   
   return (
     <div className='cards'>
       {items.map((element) => {
-        console.log({ element });
-        return <Card {...element} key={element.name}  />;
+       
+        return <Card 
+        {...element} 
+        key={element._id} 
+        currentUser={currentUser}
+        product={element}
+        onProductLike={handleProductLike}
+        setParentCounter={setParentCounter}
+        />;
       })}
     </div>
   );

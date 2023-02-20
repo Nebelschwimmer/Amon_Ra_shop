@@ -5,7 +5,7 @@
 	align-items: flex-start;
 	padding: 10px;
 	border-radius: 10px;
-	width: 230px;
+	width: 180px;
 	height: 530px;
 	
 	
@@ -110,7 +110,18 @@
 	position: relative;
 	left:180px;
 	bottom:20px;
+	fill: rgba(255, 151, 151, 0.9);
+	transition: ease-in 0.2s;
 }
+.card__favorite:hover {
+	fill: red;
+}
+
+
+
+.card__favorite_active {
+  fill: red;}
+
 
 .card__cart {
 	margin-top: auto;
@@ -161,12 +172,6 @@
 .tag_type_sale {
 	background-color: #01A54E;
 	color: #FFFFFF;
-}
-svg {
-    fill: red;
-}
-.card__liked > svg {
-  fill: red;
 }
 
 

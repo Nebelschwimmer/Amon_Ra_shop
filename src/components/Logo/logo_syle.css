@@ -1,11 +1,5 @@
 .logo-img {
-  width: 70px;
-height: 70px;
-
-
-/* Inside auto layout */
-
-flex: none;
-order: 0;
-flex-grow: 0;
+width: 100px;
+height: 100px;
+filter : hue-rotate(180deg)
 }

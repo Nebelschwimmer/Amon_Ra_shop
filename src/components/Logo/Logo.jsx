@@ -1,4 +1,4 @@
-import logoSrc from './eye-of-ra.svg';
+import logoSrc from './Eye-of-Horus.png';
 import './logo_syle.css';
 
 export const Logo = () => {
