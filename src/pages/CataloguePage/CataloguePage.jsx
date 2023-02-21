@@ -8,7 +8,7 @@ export const CataloguePage = ({searchQuery, items, currentUser, handleProductLik
       <Sort_nav/>
       {searchQuery && (
           <p style={{fontSize: '22px'}}>
-            По запросу {searchQuery} найден(о) {items.length}
+            По запросу "{searchQuery}" имеется: {items.length}
             {getIssues(items.length)}
           </p>
         )}

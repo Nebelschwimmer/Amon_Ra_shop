@@ -78,7 +78,17 @@ const config = {
       })
     });
   }
-  }
+  
+      changeUserAvatar() {
+        return fetch(`${this._baseUrl}/v2/group-10/users/me/avatar`, {
+          method: 'PATCH',
+          headers: this._headers,
+          body: JSON.stringify({
+            avatar: "https://i.pinimg.com/originals/f1/ca/9d/f1ca9daf96bcfddccb7c792b9c8d684e.jpg"  
+          })
+        });
+      }    
+      }
 
       
        
