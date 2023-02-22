@@ -4,7 +4,6 @@ import { styled } from '@mui/material/styles';
 import IconButton from '@mui/material/IconButton';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import './cart.css'
-import { red } from '@mui/material/colors';
 
  
 export default function IconCart({ count=0, clickFunction }) {

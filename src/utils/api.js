@@ -17,7 +17,7 @@ const config = {
       this._baseUrl = data.baseUrl;
       this._headers = data.headers;
     }
-    getProductList(page = 3) {
+    getProductList(page=2) {
       return fetch(`${this._baseUrl}/products?page=${page}`, {
         headers: this._headers,
       }).then((res) => onResponse(res));
@@ -56,20 +56,20 @@ const config = {
         method: 'POST',
         body: JSON.stringify({
           
-          "name": "Бастет, статуэтка",
-          "price": 760,
-          "discount": 0,
-          "wight": "100 г",
-          "description": "Стоящая",
+          "name": "Священная кошка, статуэтка",
+          "price": 870,
+          "discount": 20,
+          "wight": "300 г",
+          "description": "Статуэтка священной кошки - воплощения богини домашнего очага Бастет",
           "available": true,
           "stock": 10,
-          "pictures": "https://perstni.com/wp-content/uploads/2016/01/cs619422.vk_.me_1.jpg"  
+          "pictures": "https://media.istockphoto.com/id/119496906/photo/black-and-gold-egyptian-cat-god-bastet-on-white-background.jpg?s=170667a&w=0&k=20&c=1Wq_ccQYD_9yln3h0tgL5tirm0v_K_pmhCbH_KMIacs="
            }),
         }).then((res) => onResponse(res)); 
        }  
     
      changeUserInfo() {
-      return fetch(`${this._baseUrl}products/users/me`, {
+      return fetch(`${this._baseUrl}/products/users/me`, {
       method: 'PATCH',
       headers: this._headers,
       body: JSON.stringify({
@@ -87,7 +87,14 @@ const config = {
             avatar: "https://i.pinimg.com/originals/f1/ca/9d/f1ca9daf96bcfddccb7c792b9c8d684e.jpg"  
           })
         });
-      }    
+      }
+      
+      deleteProductById (productId) {
+        return fetch(`${this._baseUrl}/products/${productId}`, {
+          method: 'DELETE',
+          headers: this._headers,
+        });  
+      }
       }
 
       

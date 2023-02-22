@@ -8,6 +8,10 @@ body {
   -moz-osx-font-smoothing: grayscale;
   background-color: rgb(255, 248, 227);
   overflow-x:hidden;
+  background-image: url("pyramid-egypt_bg.jpg");
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 
@@ -23,6 +27,9 @@ body {
   font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
   font-size: 16px;
   overflow-x:hidden;
+  opacity: 0.95;
+  position: relative;
+  top:170px
 }
 
 

@@ -7,7 +7,7 @@ export const Search = ({ setSearchQuery, searchQuery }) => {
   placeholder='Найдите ваш товар' 
   className="search__input"
   onChange={(event) => setSearchQuery(event.target.value)}
-  value={searchQuery}
+  value={searchQuery ?? ''}
   />
   
   )

@@ -1,6 +1,7 @@
 import { ReactComponent as Like } from './like.svg';
 import './index.css'
 import { Link } from 'react-router-dom';
+import { api } from '../../utils/api';
 export const Card = ({
   pictures, 
   name, 
@@ -11,14 +12,26 @@ export const Card = ({
   onProductLike,
   currentUser
 }) => {
+  
+  
+  
   const isLiked = product.likes.some((el) => el === currentUser._id);
   const handleLikeClick = () => {
     onProductLike(product);}
     return (
       <div className='card'>
-        <div className='card__sticky card__stick_top-left'>
-          <span className='card__discount'>{discount}%</span>
-        </div>
+       
+       <div className='card__sticky card__sticky_type_top-left'>
+        {!!product.discount && (
+            <span className='card__discount'>
+              {product.discount}&nbsp;%
+            </span>
+          )}
+          </div>
+          
+
+
+
         <div className='card__sticky card__stick_top-right'>
           <button className={`card__favorite ${isLiked ? 'card__favorite_active' : ''}`}
           onClick={handleLikeClick}
@@ -40,6 +53,7 @@ export const Card = ({
         id='basket'>
           В корзину
         </span>
+        
       </div>
     );
   };console.log(Card)

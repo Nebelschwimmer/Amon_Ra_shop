@@ -6,7 +6,7 @@ import { api } from '../../utils/api';
 import IconCart from './Cart/cart';
 import IconLogin from './Login_button/login_button'
 import IconLogout from './Logout_button/logout_button'
-import HamburgerMenu from './Hamburger_menu/hamburgerMenu';
+import HamburgerMenu from '../Header/Hamburger_menu/hamburgerMenu';
 
 
 
@@ -15,7 +15,7 @@ export const Header = ({ setSearchQuery, searchQuery, parentCounter, user }) => 
 const [counter, setCartCounter] = useState(parentCounter);
   //Функция для кнопки добавления нового товара
   const addProductOnClick = async ()=>{
-   await api.addProductOnClick()
+   await api.addProduct()
   }
   const changeUserInfoOnClick = async ()=>{
     await api.changeUserInfo()
@@ -23,6 +23,10 @@ const [counter, setCartCounter] = useState(parentCounter);
   const changeUserAvatarOnClick = async ()=>{
     await api.changeUserAvatar()  
   }
+
+ 
+
+
  
 //Use-effect для корзины
   useEffect(() => {
@@ -35,6 +39,7 @@ const [counter, setCartCounter] = useState(parentCounter);
   <div className = 'header' id='head'>
       <div className = 'header__wrapper'>
         <div className = 'header__left'>
+        <HamburgerMenu pageWrapId={'page-wrap'} />
             <Logo />
             <div className = 'header_title_wrapper'>
             <div className = 'header__title'>Амон Ра </div>
@@ -55,6 +60,8 @@ const [counter, setCartCounter] = useState(parentCounter);
           <button className='button_add' onClick={() => addProductOnClick()}>Добавить товар</button>
           <button className =' button_change_user_info' onClick={() => changeUserInfoOnClick()} >Изменить данные пользователя</button>
           <button className =' button_change_user_info' onClick={() => changeUserAvatarOnClick()} >Изменить аватар</button>
+          
+        
         </div>  
       </div>  
   </div>

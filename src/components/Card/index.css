@@ -6,7 +6,7 @@
 	padding: 10px;
 	border-radius: 10px;
 	width: 200px;
-	height: 530px;
+	height: 500px;
 	
 	
 }
@@ -107,9 +107,9 @@
 	border: none;
 	padding: 0;
 	display: flex;
-	position: relative;
+	position: absolute;
 	left:180px;
-	bottom:20px;
+	top:20px;
 	fill: rgba(255, 151, 151, 0.9);
 	transition: ease-in 0.2s;
 }
@@ -147,6 +147,7 @@
 	position: absolute;
 	bottom:10px;
 	margin-top: 10px;
+	left:57px
 }
 
 .btn_type_primary {

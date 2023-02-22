@@ -7,21 +7,30 @@ import { useEffect, useState } from 'react';
 import { api } from '../../utils/api';
 import { useParams } from 'react-router-dom';
 
-const product_id = '63ecf77059b98b038f77b65f';
+
 
 export const Product = ({ currentUser, id }) => {
+  //Отображение продукта
   const [product, setProduct] = useState({});
   useEffect(() => {
     api.getProductById(id).then((data) => setProduct(data));
   }, [id]);
+  
+  //Удаление продукта
+  const productID = product._id
+  console.log(product)
+  const deleteProduct = async () =>  {
+    await api.deleteProductById(productID)  
+  }
+ 
+  
 
-console.log(Product)
-console.log(currentUser)
 
 const isLiked = product?.likes?.some((el) => el === currentUser._id);
 
   return (
     <>
+     <button className={s.delete_button} onClick={()=>deleteProduct(productID)}>X</button>
       <div className={s.product}>
         <div className={s.imgWrapper}>
           <img className={s.img} src={product.pictures} alt={`Изображение`} />

@@ -9,6 +9,7 @@ import { ProductPage } from '../../pages/ProductPage/ProductPage';
 import { CataloguePage} from '../../pages/CataloguePage/CataloguePage';
 import { Categories } from '../Categories/categories';
 
+
 function App() {
 // Добавление use-state
   const [items, setItems] = useState([]);
@@ -16,10 +17,14 @@ function App() {
   const [parentCounter, setParentCounter] = useState(0);
   const [currentUser, setCurrentUser] = useState({});
 
+ 
+  //Объявление функции для фильтрации
+  const items_filtred = (products, id) => products.filter((e) => e.author._id === id);
+ //Объявление функции для поиска
   const handleSearch = (search) => {
-    api.searchProducts(search).then((data) => setItems([...data]))
+    api.searchProducts(search).then((data) => (items_filtred(data, currentUser._id)))
   };
-//  const items_filtred = (products, id) => products.filter((e) => e.author._id === id);
+ 
 // Добавление use-debounce
   const debounceValueInApp = useDebounce(searchQuery, 500);
 
@@ -29,11 +34,11 @@ function App() {
     isLiked 
     ? api.deleteLike(product._id).then((newItem)=>{
         const newItems = items.map((el)=> el._id === newItem._id ? newItem : el);
-        setItems([...newItems]);
+        setItems(items_filtred(newItems, currentUser._id));
     })
     : api.addLike(product._id).then((newItem)=>{
       const newItems = items.map((el)=> el._id === newItem._id ? newItem : el);
-      setItems([...newItems]);
+      setItems(items_filtred(newItems, currentUser._id));
   });
   }
   
@@ -48,10 +53,12 @@ useEffect(() => {
     Promise.all([api.getUserInfo(), api.getProductList()]).then(
       ([userData, productData]) => {
         setCurrentUser(userData);
-        setItems(productData.products)
+        setItems(items_filtred(productData.products, userData._id));
       }
     );
   }, []);
+  console.log(currentUser)
+  
 
   //Тело
   return (
