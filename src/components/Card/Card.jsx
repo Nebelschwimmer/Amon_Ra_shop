@@ -3,8 +3,7 @@ import { ReactComponent as Like } from './like.svg';
 import './index.css'
 import { Link } from 'react-router-dom';
 import { UserContext } from '../context/user_context';
-import { useEffect } from "react";
-import { useState } from "react";
+
 
 export const Card = ({
   pictures, 
@@ -17,15 +16,13 @@ export const Card = ({
 }) => {
   
   const {currentUser} = React.useContext(UserContext);
-  const [isLiked, setLiked] = useState(false);
-
-  useEffect(() => {
-    const isLiked = product?.likes?.some((el) => el === currentUser._id);
-    setLiked(isLiked);
-  }, [product?.likes, currentUser]);
   
+
+
+  const isLiked = product.likes.some((el) => el === currentUser._id);
   const handleLikeClick = () => {
-    onProductLike(product, isLiked);}
+    onProductLike(product)
+  ;}
   
     
    

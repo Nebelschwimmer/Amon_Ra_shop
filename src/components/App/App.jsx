@@ -32,8 +32,8 @@ function App() {
   const debounceValueInApp = useDebounce(searchQuery, 500);
 
   //Добавление и удаление лайка
-   function handleProductLike(product, isLiked) {
-    // const isLiked = product.likes.some((el) => el === currentUser._id);
+   function handleProductLike(product) {
+    const isLiked = product.likes.some((el) => el === currentUser._id);
     isLiked 
     ? api.deleteLike(product._id).then((newItem)=>{
         const newItems = items.map((el)=> el._id === newItem._id ? newItem : el);
@@ -84,7 +84,8 @@ useEffect(() => {
      
         <Routes>      
         <Route path="/"
-          element={<HomePage/>}
+          element={<HomePage/>
+        }
           ></Route>
         <Route
             path='/catalog'

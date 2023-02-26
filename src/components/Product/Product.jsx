@@ -11,24 +11,25 @@ import { UserContext } from '../context/user_context';
 export const Product = ({ id, setParentCounter, handleProductLike }) => {
   //Отображение продукта
   const currentUser = useContext(UserContext);
-  const [product, setProduct] = useState({});
+  const [product, setProduct] = useState(false);
+
+  const [productCount, setProductCount] = useState(0);
+  const [liked, setLiked] = useState({});
+
+  console.log({ product });
+  const isLiked = product?.likes?.some((el) => el === currentUser._id);
+
   useEffect(() => {
     api.getProductById(id).then((data) => setProduct(data));
   }, [id]);
   
-  const [productCount, setProductCount] = useState(0);
-  const [liked, setLiked] = useState({});
-
+  
   useEffect(() => {
     const isLiked = product?.likes?.some((el) => el === currentUser._id);
     setLiked(isLiked);
   }, [product.likes?.length, product?.likes, currentUser]);
 
-  const handleLike = () => {
-    handleProductLike(product, liked);
-    setLiked((st) => !st);
-  };
-  console.log({ liked });
+
   
  
   
@@ -48,6 +49,7 @@ export const Product = ({ id, setParentCounter, handleProductLike }) => {
       >
         Удалить X
       </button>
+      <div className={s.title}>{product.name}</div>
       <div className={s.product}>
         <div className={s.imgWrapper}>
           <img className={s.img} src={product.pictures} alt={`Изображение`} />
@@ -85,10 +87,10 @@ export const Product = ({ id, setParentCounter, handleProductLike }) => {
               В корзину
             </button>
           </div>
-          <button onClick={handleLike}
-          className={cn(s.favorite, { [s.favoriteActive]: liked })}>
+          <button 
+          className={cn(s.favorite, { [s.favoriteActive]: isLiked })}>
             <Save />
-            <span>{liked ? "В избранном" : "В избранное"}</span>
+            <span>{isLiked ? "В избранном" : "В избранное"}</span>
           </button>
           <div className={s.delivery}>
             <img src={truck} alt="truck" />
@@ -99,15 +101,7 @@ export const Product = ({ id, setParentCounter, handleProductLike }) => {
               </p>
             </div>
           </div>
-          <div className={s.delivery}>
-            <img src={quality} alt="quality" />
-            <div className={s.right}>
-              <h3 className={s.name}>Доставка по всему Миру!</h3>
-              <p className={s.text}>
-                Доставка курьером — <span className={s.bold}>от 399 ₽</span>
-              </p>
-            </div>
-          </div>
+          
         </div>
       </div>
 
@@ -119,9 +113,10 @@ export const Product = ({ id, setParentCounter, handleProductLike }) => {
           <div className={s.naming}>Вес</div>
           <div className={s.description}> {product.wight} </div>
           <div className={s.naming}>Цена</div>
-          <div className={s.description}> {product.price} </div>
-          <div className={s.naming}>Описание</div>
-          <div className={s.description}>{product.description}</div>
+          <div className={s.description}> {product.price} ₽ </div>
+          <div className={s.naming}>В наличии:</div>
+          <div className={s.description}> {product.stock} шт. </div>
+        
         </div>
       </div>
     </div>
