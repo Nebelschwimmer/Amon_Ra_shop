@@ -7,7 +7,7 @@ overflow: hidden;
 font-family: 'Reggae One', cursive;
 position: relative;
 top: 200px;
-margin-top: 400px;
+margin-top: 130px;
 width: 100vw;
 height: 230px;
 
@@ -25,7 +25,9 @@ gap:9px;
 }
 
 .footer_left_title {
-font-size: 50px;
+font-size: 40px;
+position: relative;
+top:8px
 }
 .footer_left_title_logo {
 display: flex;
@@ -35,7 +37,7 @@ justify-content: center;
 .footer_center a {
 text-decoration: none;
 color: black;
-font-size: 22px;
+font-size: 18px;
 }
 
 .footer_center {
@@ -62,8 +64,11 @@ flex-direction: column;
 gap:10px;    
 }
 .footer_right_contacts_label {
-font-size: 35px;    
+font-size: 28px;    
 }
 .footer_right_contacts_number {
-font-size: 20px;    
+font-size: 15px;    
 }
+.footer_right_contacts_email {
+font-size: 15px;
+}   

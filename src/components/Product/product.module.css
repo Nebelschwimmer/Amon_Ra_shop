@@ -1,9 +1,12 @@
 .container {
 	max-width: 1024px;
-	padding-left: 16px;
-	padding-right: 16px;
+	padding-left: 70px;
+	padding-right: 40px;
+	padding-top: 30px;
 	width: 100%;
 	margin: 0 auto;
+	overflow-y: hidden;
+	padding-bottom: 50px;
 }
 
 .product {
@@ -191,8 +194,7 @@ font-size: 19px;
 border: none;
 padding-left: 5px;
 padding-right: 5px;
-
-border-radius: 100%;
+cursor: pointer;
 
 }
 

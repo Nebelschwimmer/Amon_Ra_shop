@@ -1,0 +1,11 @@
+.search_found {
+    font-size: 22px;
+    text-align: center;	
+}
+.search_not_found {
+    font-size: 22px;	
+display: flex;
+align-items: center;
+flex-direction: column;
+gap:100px
+}

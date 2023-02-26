@@ -1,36 +1,53 @@
-import s from './product.module.css';
-import truck from './images/truck.svg';
-import quality from './images/quality.svg';
-import cn from 'classnames';
-import { ReactComponent as Save } from './images/save.svg';
-import { useEffect, useState } from 'react';
-import { api } from '../../utils/api';
-import { useParams } from 'react-router-dom';
+import s from "./product.module.css";
+import truck from "./images/truck.svg";
+import quality from "./images/quality.svg";
+import cn from "classnames";
+import { ReactComponent as Save } from "./images/save.svg";
+import { useContext, useEffect, useState } from "react";
+import { api } from "../../utils/api";
+import { UserContext } from '../context/user_context';
 
 
-
-export const Product = ({ currentUser, id }) => {
+export const Product = ({ id, setParentCounter, handleProductLike }) => {
   //Отображение продукта
+  const currentUser = useContext(UserContext);
   const [product, setProduct] = useState({});
   useEffect(() => {
     api.getProductById(id).then((data) => setProduct(data));
   }, [id]);
   
-  //Удаление продукта
-  const productID = product._id
-  console.log(product)
-  const deleteProduct = async () =>  {
-    await api.deleteProductById(productID)  
-  }
+  const [productCount, setProductCount] = useState(0);
+  const [liked, setLiked] = useState({});
+
+  useEffect(() => {
+    const isLiked = product?.likes?.some((el) => el === currentUser._id);
+    setLiked(isLiked);
+  }, [product.likes?.length, product?.likes, currentUser]);
+
+  const handleLike = () => {
+    handleProductLike(product, liked);
+    setLiked((st) => !st);
+  };
+  console.log({ liked });
+  
  
   
+  //Удаление продукта
+  const productID = product._id;
+  const deleteProduct = async () => {
+    await api.deleteProductById(productID);
+  };
 
-
-const isLiked = product?.likes?.some((el) => el === currentUser._id);
-
-  return (
-    <>
-     <button className={s.delete_button} onClick={()=>deleteProduct(productID)}>X</button>
+  
+ 
+    return (
+    <div className={s.container}>
+      <button
+        className={s.delete_button}
+        onClick={() => deleteProduct(productID)}
+      >
+        Удалить X
+      </button>
       <div className={s.product}>
         <div className={s.imgWrapper}>
           <img className={s.img} src={product.pictures} alt={`Изображение`} />
@@ -47,20 +64,34 @@ const isLiked = product?.likes?.some((el) => el === currentUser._id);
           )}
           <div className={s.btnWrap}>
             <div className={s.left}>
-              <button className={s.minus}>-</button>
-              <span className={s.num}>0</span>
-              <button className={s.plus}>+</button>
+              <button
+                className={s.minus}
+                onClick={() => productCount > 0 && setProductCount((s) => s - 1)}
+              >
+                -
+              </button>
+              <span className={s.num}>{productCount}</span>
+              <button
+                className={s.plus}
+                onClick={() => setProductCount((s) => s + 1)}
+              >
+                +
+              </button>
             </div>
-            <a href='/#' className={`btn btn_type_primary ${s.cart}`}>
+            <button
+              onClick={() => setParentCounter((state) => state + productCount)}
+              className={`btn btn_type_primary ${s.cart}`}
+            >
               В корзину
-            </a>
+            </button>
           </div>
-          <button className={cn(s.favorite, { [s.favoriteActive]: isLiked })}>
+          <button onClick={handleLike}
+          className={cn(s.favorite, { [s.favoriteActive]: liked })}>
             <Save />
-            <span>{isLiked ? 'В избранном' : 'В избранное'}</span>
+            <span>{liked ? "В избранном" : "В избранное"}</span>
           </button>
           <div className={s.delivery}>
-            <img src={truck} alt='truck' />
+            <img src={truck} alt="truck" />
             <div className={s.right}>
               <h3 className={s.name}>Доставка по всему Миру!</h3>
               <p className={s.text}>
@@ -69,7 +100,7 @@ const isLiked = product?.likes?.some((el) => el === currentUser._id);
             </div>
           </div>
           <div className={s.delivery}>
-            <img src={quality} alt='quality' />
+            <img src={quality} alt="quality" />
             <div className={s.right}>
               <h3 className={s.name}>Доставка по всему Миру!</h3>
               <p className={s.text}>
@@ -90,11 +121,9 @@ const isLiked = product?.likes?.some((el) => el === currentUser._id);
           <div className={s.naming}>Цена</div>
           <div className={s.description}> {product.price} </div>
           <div className={s.naming}>Описание</div>
-          <div className={s.description}>
-          {product.description}
-          </div>
+          <div className={s.description}>{product.description}</div>
         </div>
       </div>
-    </>
+    </div>
   );
 };

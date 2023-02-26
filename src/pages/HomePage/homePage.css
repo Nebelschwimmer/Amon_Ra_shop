@@ -1,0 +1,67 @@
+.home_container {
+
+background-color: white;
+
+padding-top: 20px;
+display: flex;
+flex-direction: column;
+justify-content: center; 
+
+}
+.home_image_container{  
+    display: flex;
+    justify-content: center; 
+    padding-top:50px;
+}
+
+.home_image {
+    height: 600px;
+}
+.home_greeting {
+text-align: center;
+color: darkred;
+font-family: 'Reggae One', cursive;    
+}
+.home_description_wrapper{   
+   text-align:justify; 
+}
+.home_description {   
+font-size: 18px; 
+}
+
+.home_motto {
+font-size: 28px;
+font-weight: 600;    
+text-align: center;
+
+}
+
+.home_categories_list {
+
+font-size: 20px; 
+line-height: 50px; 
+}
+.home_categories_list_title {
+    font-size: 27px;   
+}
+
+.home_catalogue_link_button{
+    background-color:#e7ac2d;
+    border: solid 1px black;
+    height: 75px;
+    width: 155px;
+    padding: 5px;
+    border-radius: 10px;
+    transition: ease-in 0.1s;
+    font-size: 25px;
+    margin-left: 550px;
+    
+    }
+    .home_catalogue_link_button:hover{
+      background-color:rgba(248, 174, 14, 0.5);
+      box-shadow: 1px 1px 1px 1px  black; 
+      opacity: 0.8;
+    
+    }
+
+

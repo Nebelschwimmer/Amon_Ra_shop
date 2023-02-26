@@ -2,10 +2,10 @@
 	position: relative;
 	display: flex;
 	flex-direction: column;
-	align-items: flex-start;
+	align-items: center;
 	padding: 10px;
 	border-radius: 10px;
-	width: 200px;
+	width: 230px;
 	height: 500px;
 	
 	
@@ -49,9 +49,9 @@
 }
 
 .card__price {
-	font-size: 20px;
+	font-size: 24px;
 	line-height: 24px;
-	font-weight: 800;
+	font-weight: 400;
 	display: block;
 	margin-bottom: 6px;
 	text-align:right;
@@ -86,50 +86,25 @@
 	border-radius: 20px;
 }
 
-.card__stick {
-	position: absolute;
-	padding: 10px;
-}
-
-.card__stick_top-left {
-	top: 0;
-	left: 0;
-}
-
-.card__stick_top-right {
-	top: 0;
-	right: 50px;
-}
-
 .card__favorite {
 	cursor: pointer;
 	background: none;
 	border: none;
 	padding: 0;
 	display: flex;
-	position: absolute;
-	left:180px;
-	top:20px;
 	fill: rgba(255, 151, 151, 0.9);
 	transition: ease-in 0.2s;
 }
 .card__favorite:hover {
 	fill: red;
 }
-
-
-
 .card__favorite_active {
   fill: red;}
-
 
 .card__cart {
 	margin-top: auto;
 	
 }
-
-
-
 .card__link {
 	text-decoration: none;
 	color: currentColor;
@@ -143,7 +118,7 @@
 	border-radius: 55px;
 	text-decoration: none;
 	display: inline-block;
-	transition: background-color ease-in 0.3s;
+	transition: background-color ease-in 0.1s;
 	position: absolute;
 	bottom:10px;
 	margin-top: 10px;
@@ -151,12 +126,12 @@
 }
 
 .btn_type_primary {
-	background-color: #FFE44D;
+	background-color: #ffd588;
 	cursor: pointer;
 }
 .btn_type_primary:hover {
-	background-color: #FFAA0D;
-	color: #F44336;
+	background-color: #f8bc6d;
+	color: #fd2a00;
 }
 
 .tag {
@@ -174,6 +149,12 @@
 .tag_type_sale {
 	background-color: #01A54E;
 	color: #FFFFFF;
+}
+
+.card_top{
+display: flex;
+justify-content: space-between;	
+width:230px
 }
 
 

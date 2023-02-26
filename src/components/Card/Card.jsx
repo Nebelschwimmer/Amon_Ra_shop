@@ -1,7 +1,11 @@
+import React from 'react';
 import { ReactComponent as Like } from './like.svg';
 import './index.css'
 import { Link } from 'react-router-dom';
-import { api } from '../../utils/api';
+import { UserContext } from '../context/user_context';
+import { useEffect } from "react";
+import { useState } from "react";
+
 export const Card = ({
   pictures, 
   name, 
@@ -10,41 +14,43 @@ export const Card = ({
   product,
   setParentCounter,
   onProductLike,
-  currentUser
 }) => {
   
+  const {currentUser} = React.useContext(UserContext);
+  const [isLiked, setLiked] = useState(false);
+
+  useEffect(() => {
+    const isLiked = product?.likes?.some((el) => el === currentUser._id);
+    setLiked(isLiked);
+  }, [product?.likes, currentUser]);
   
-  
-  const isLiked = product.likes.some((el) => el === currentUser._id);
   const handleLikeClick = () => {
-    onProductLike(product);}
+    onProductLike(product, isLiked);}
+  
+    
+   
     return (
       <div className='card'>
-       
-       <div className='card__sticky card__sticky_type_top-left'>
-        {!!product.discount && (
-            <span className='card__discount'>
-              {product.discount}&nbsp;%
-            </span>
-          )}
-          </div>
-          
+       <div className='card_top'>
+            <div className='card__sticky card__sticky_type_top-left'>
+              {!!discount && (
+                <span className='card__discount'>
+                {discount}&nbsp;%
+                </span>
+                )}
+            </div>    
+              <div className='card__sticky card__stick_top-right'>
+                <button className={`card__favorite ${isLiked ? 'card__favorite_active' : ''}`}
+                onClick={handleLikeClick}>
+                  <Like className='card__liked'/>
+                </button>
+              </div>
+      </div>
 
-
-
-        <div className='card__sticky card__stick_top-right'>
-          <button className={`card__favorite ${isLiked ? 'card__favorite_active' : ''}`}
-          onClick={handleLikeClick}
-          >
-            
-            <Like className='card__liked'/>
-          </button>
-        </div>
         <Link to={`/product/${product._id}`} className='card__link'>
           <img src={pictures} alt='card__image' className='card__image'/>
           <div className='card__desc'>
-            <span className='card__price'>{price}p</span>
-            <span className='card_weight'>1pc</span>
+            <span className='card__price'>{price} ₽</span>
             <p className='card__name'>{name}</p>
           </div>
           </Link>
@@ -56,4 +62,4 @@ export const Card = ({
         
       </div>
     );
-  };console.log(Card)
+  };

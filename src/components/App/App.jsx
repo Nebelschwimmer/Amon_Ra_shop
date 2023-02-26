@@ -4,11 +4,13 @@ import { Header } from '../Header/Header';
 import './App.css';
 import { api } from '../../utils/api';
 import { useDebounce } from '../../utils/utils';
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes, useNavigate } from 'react-router-dom';
 import { ProductPage } from '../../pages/ProductPage/ProductPage';
 import { CataloguePage} from '../../pages/CataloguePage/CataloguePage';
 import { Categories } from '../Categories/categories';
-
+import { CardContext } from '../context/card_context';
+import { UserContext } from '../context/user_context';
+import { HomePage } from '../../pages/HomePage/HomePage';
 
 function App() {
 // Добавление use-state
@@ -19,18 +21,19 @@ function App() {
 
  
   //Объявление функции для фильтрации
-  const items_filtred = (products, id) => products.filter((e) => e.author._id === id);
+  const items_filtred = (products, id) => products.filter((el) => el.author._id === id);
  //Объявление функции для поиска
   const handleSearch = (search) => {
-    api.searchProducts(search).then((data) => (items_filtred(data, currentUser._id)))
+    api.searchProducts(search).then((data) => setItems(items_filtred(data, currentUser._id)))
   };
+  
  
 // Добавление use-debounce
   const debounceValueInApp = useDebounce(searchQuery, 500);
 
   //Добавление и удаление лайка
-   function handleProductLike(product) {
-    const isLiked = product.likes.some((el) => el === currentUser._id);
+   function handleProductLike(product, isLiked) {
+    // const isLiked = product.likes.some((el) => el === currentUser._id);
     isLiked 
     ? api.deleteLike(product._id).then((newItem)=>{
         const newItems = items.map((el)=> el._id === newItem._id ? newItem : el);
@@ -39,8 +42,10 @@ function App() {
     : api.addLike(product._id).then((newItem)=>{
       const newItems = items.map((el)=> el._id === newItem._id ? newItem : el);
       setItems(items_filtred(newItems, currentUser._id));
-  });
-  }
+ 
+    });
+  
+}
   
 
 // Use-effects
@@ -57,23 +62,32 @@ useEffect(() => {
       }
     );
   }, []);
-  console.log(currentUser)
-  
 
+  const navigate = useNavigate();
+  
+  const contextValue = { currentUser, searchQuery, setSearchQuery, setParentCounter, parentCounter }
+  const contextCardValue = { items:items, setParentCounter, handleProductLike }
+  // setSort: setSortCards
   //Тело
   return (
-    <div>
+    <>
+    <UserContext.Provider value={contextValue}>
+        <CardContext.Provider value={contextCardValue}>
     <Header 
         user={currentUser}
         parentCounter={parentCounter}
         searchQuery={searchQuery}
         setSearchQuery={setSearchQuery} />
+  
     
     <main className='content container'>
      
-      <Routes>
-          <Route
-            path='/'
+        <Routes>      
+        <Route path="/"
+          element={<HomePage/>}
+          ></Route>
+        <Route
+            path='/catalog'
             element={
               <CataloguePage
                 searchQuery={searchQuery}
@@ -83,16 +97,28 @@ useEffect(() => {
                 setParentCounter={setParentCounter}
               />
             }
-
-          ></Route>
-          <Route path='/product/:productId' element={<ProductPage currentUser={currentUser} />}>
-          </Route>
-        </Routes> 
-    
-    </main>
-    
-    <Footer/> 
-    </div>
+      >
+        </Route>
+        <Route path='/product/:productId' 
+            element={<ProductPage currentUser={currentUser} 
+            setParentCounter={setParentCounter}
+            handleProductLike={handleProductLike} />}>
+        </Route>
+        <Route path='*' element={
+            
+            <div className='error_not_found_title'>Страница не найдена 
+            <div className='error_not_found_sad_face'></div>
+            <button className='error_not_found_button' 
+            onClick={() => navigate('/')}>На главную
+            </button>
+            </div>}>
+        </Route> 
+      </Routes>    
+    </main>  
+    <Footer/>
+    </CardContext.Provider>
+    </UserContext.Provider>      
+    </>
   );
 }
 

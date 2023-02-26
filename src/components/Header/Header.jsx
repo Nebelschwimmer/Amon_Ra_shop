@@ -12,7 +12,6 @@ import HamburgerMenu from '../Header/Hamburger_menu/hamburgerMenu';
 
 export const Header = ({ setSearchQuery, searchQuery, parentCounter, user }) => {
 
-const [counter, setCartCounter] = useState(parentCounter);
   //Функция для кнопки добавления нового товара
   const addProductOnClick = async ()=>{
    await api.addProduct()
@@ -24,15 +23,6 @@ const [counter, setCartCounter] = useState(parentCounter);
     await api.changeUserAvatar()  
   }
 
- 
-
-
- 
-//Use-effect для корзины
-  useEffect(() => {
-    setCartCounter((state) => state + 1);
-    return () => setCartCounter(parentCounter)
-  }, [parentCounter]);
 
  //Тело
   return (
@@ -48,7 +38,7 @@ const [counter, setCartCounter] = useState(parentCounter);
             <Search  searchQuery={searchQuery} setSearchQuery={setSearchQuery}/>    
         </div>
         <div className = 'header_user_buttons'>
-          <IconCart count={counter}/>
+          <IconCart count={parentCounter}/>
           <IconLogin/>
         </div>
         <div className='user_info_wrapper'>

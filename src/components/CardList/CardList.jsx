@@ -1,10 +1,11 @@
 import { Card } from '../Card/Card';
 import './index.css';
+import { CardContext } from '../context/card_context'; 
+import { useContext } from 'react';
 
-export const CardList = ({  currentUser,
-  items,
-  setParentCounter,
-  handleProductLike, }) => {
+export const CardList = () => {
+
+  const { items, currentUser, setParentCounter, handleProductLike } = useContext(CardContext)
   
   return (
     <div className='cards'>
