@@ -55,15 +55,15 @@ const config = {
         headers: this._headers,
         method: 'POST',
         body: JSON.stringify({
-          
-          "name": "Священная кошка, статуэтка",
-          "price": 870,
-          "discount": 20,
-          "wight": "300 г",
-          "description": "Статуэтка священной кошки - воплощения богини домашнего очага Бастет",
-          "available": true,
-          "stock": 10,
-          "pictures": "https://media.istockphoto.com/id/119496906/photo/black-and-gold-egyptian-cat-god-bastet-on-white-background.jpg?s=170667a&w=0&k=20&c=1Wq_ccQYD_9yln3h0tgL5tirm0v_K_pmhCbH_KMIacs="
+          "name": "Ра, статуэтка",
+		"price": 1430,
+		"discount": 5,
+		"wight": "600 г",
+		"description": "Статуэтка верховного божества египтян - Ра (Амон Ра). Материал: алебастр. Ручная работа.",
+		"available": true,
+		"stock": 15,
+		"pictures": "https://i.pinimg.com/originals/45/e2/e6/45e2e65006da9b3c9fd1699af68c8654.jpg"
+         
            }),
         }).then((res) => onResponse(res)); 
        }  

@@ -9,3 +9,22 @@ align-items: center;
 flex-direction: column;
 gap:100px
 }
+.to_home_link_button{
+    background-color:#e7ac2d;
+    border: solid 1px black;
+    height: 45px;
+    width: 155px;
+    padding: 5px;
+    border-radius: 10px;
+    transition: ease-in 0.1s;
+    font-size: 20px;
+    margin-left: 550px; 
+    margin-top: 120px;   
+    cursor: pointer;
+}
+.to_home_link_button:hover{
+    background-color:#ffe4aa
+
+
+ 
+}

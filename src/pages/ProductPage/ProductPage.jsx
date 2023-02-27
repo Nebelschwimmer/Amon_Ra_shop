@@ -4,12 +4,11 @@ import { useState } from "react";
 import { useEffect } from "react";
 import { api } from "../../utils/api";
 
-export const ProductPage = ({currentUser, handleProductLike, setParentCounter}) => {
+
+export const ProductPage = ({currentUser, setParentCounter}) => {
 
   const id = useParams();
 
-  console.log(id);
-
-
-  return <Product  id={id.productId} />;
+  return <Product  id={id.productId} currentUser={currentUser} setParentCounter={setParentCounter} />
+  
 };

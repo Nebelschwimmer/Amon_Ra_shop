@@ -28,8 +28,8 @@ export const CataloguePage = () => {
             </p>)      
         }
         <CardList
-      
         />
+        <button className='to_home_link_button' onClick={() => navigate('/')}>На главную</button> 
         {/* <button className='error_not_found_button' 
                 onClick={() => navigate('/')}>На главную
                 </button> */}

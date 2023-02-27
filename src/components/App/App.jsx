@@ -21,10 +21,10 @@ function App() {
 
  
   //Объявление функции для фильтрации
-  const items_filtred = (products, id) => products.filter((el) => el.author._id === id);
+  const items_filtered = (products, id) => products.filter((el) => el.author._id === id);
  //Объявление функции для поиска
   const handleSearch = (search) => {
-    api.searchProducts(search).then((data) => setItems(items_filtred(data, currentUser._id)))
+    api.searchProducts(search).then((data) => setItems(items_filtered(data, currentUser._id)))
   };
   
  
@@ -37,11 +37,11 @@ function App() {
     isLiked 
     ? api.deleteLike(product._id).then((newItem)=>{
         const newItems = items.map((el)=> el._id === newItem._id ? newItem : el);
-        setItems(items_filtred(newItems, currentUser._id));
+        setItems(items_filtered(newItems, currentUser._id));
     })
     : api.addLike(product._id).then((newItem)=>{
       const newItems = items.map((el)=> el._id === newItem._id ? newItem : el);
-      setItems(items_filtred(newItems, currentUser._id));
+      setItems(items_filtered(newItems, currentUser._id));
  
     });
   
@@ -58,16 +58,41 @@ useEffect(() => {
     Promise.all([api.getUserInfo(), api.getProductList()]).then(
       ([userData, productData]) => {
         setCurrentUser(userData);
-        setItems(items_filtred(productData.products, userData._id));
+        setItems(items_filtered(productData.products, userData._id));
       }
     );
   }, []);
 
   const navigate = useNavigate();
+
+  const setSortItems = (sort) => {
+    
+    if (sort === 'Сначала дешевые') {
+      const newItems= items.sort((a,b)=> a.price - b.price);
+      setItems([...newItems]);
+    }
+    if (sort === 'Сначала дорогие') {
+      const newItems = items.sort((a,b)=> b.price - a.price);
+      setItems([...newItems]);
+    }
+    if (sort === 'Популярные') {
+      const newItems = items.sort((a,b)=> b.likes.length - a.likes.length);
+      setItems([...newItems]);
+    }
+    if (sort === 'Новинки') {
+      const newItems = items.sort((a,b)=> new Date(a.created_at) - new Date(b.created_at));
+      setItems([...newItems]);
+    }
+    if (sort === 'По скидке') {
+      const newItems = items.sort((a,b)=> b.discount - a.discount);
+      setItems([...newItems]);
+    }
+  }
   
-  const contextValue = { currentUser, searchQuery, setSearchQuery, setParentCounter, parentCounter }
-  const contextCardValue = { items:items, setParentCounter, handleProductLike }
-  // setSort: setSortCards
+  const contextValue = { currentUser, searchQuery, setSearchQuery, setParentCounter, parentCounter, setSort: setSortItems }
+  const contextCardValue = { items:items, setParentCounter, parentCounter, handleProductLike }
+
+  console.log(items)
   //Тело
   return (
     <>
@@ -81,12 +106,12 @@ useEffect(() => {
   
     
     <main className='content container'>
-     
         <Routes>      
         <Route path="/"
           element={<HomePage/>
         }
-          ></Route>
+          >
+          </Route>
         <Route
             path='/catalog'
             element={
@@ -97,11 +122,13 @@ useEffect(() => {
                 handleProductLike={handleProductLike}
                 setParentCounter={setParentCounter}
               />
+              
             }
       >
         </Route>
         <Route path='/product/:productId' 
-            element={<ProductPage currentUser={currentUser} 
+            element={<ProductPage 
+            currentUser={currentUser} 
             setParentCounter={setParentCounter}
             handleProductLike={handleProductLike} />}>
         </Route>

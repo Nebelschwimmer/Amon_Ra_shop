@@ -6,7 +6,7 @@ import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import './cart.css'
 
  
-export default function IconCart({ count=0, clickFunction }) {
+export default function IconCart({ count, clickFunction }) {
    
 
       const StyledBadge = styled(Badge)(({ theme }) => ({
@@ -22,7 +22,7 @@ export default function IconCart({ count=0, clickFunction }) {
   
     return (
     
-    <div onClick={()=>clickFunction()}>
+    <div>
       <IconButton className='icon_button' aria-label='cart'>
         <StyledBadge
          badgeContent={count}>

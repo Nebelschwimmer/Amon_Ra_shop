@@ -1,14 +1,16 @@
 import './Sort_nav.css';
+import { UserContext } from '../context/user_context';
+import { useContext } from 'react';
+
 export const Sort_nav = ({}) => {
 
+    const items_sorted = [{ id: 'Популярные' },  { id: 'Новинки' }, { id: 'Сначала дешевые' }, { id: 'Сначала дорогие' }, { id: 'По скидке' }]
+    const { setSort } = useContext(UserContext);
     return (
-    <div className='sort_nav' id='sort'>
-        <div className = 'sort_item' id = "popular"> Популярные </div>
-        <div className = 'sort_item' id = "new"> Новинки </div>
-        <div className = 'sort_item' id = "first_cheap"> Сначала дешёвые </div>
-        <div className = 'sort_item' id = "first_expensive"> Сначала дорогие </div>
-        <div className = 'sort_item' id = "rating"> По рейтингу </div>
-        <div className = 'sort_item' id = "discount"> По скидке </div>
-    </div>
+        <div className='sort_nav'>
+        {items_sorted.map((e) =>
+          <span key={e.id} className='sort_item' onClick={() => setSort(e.id)}>{e.id}</span>
+        )}
+      </div>
     );
   };

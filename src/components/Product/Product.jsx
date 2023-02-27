@@ -6,17 +6,23 @@ import { ReactComponent as Save } from "./images/save.svg";
 import { useContext, useEffect, useState } from "react";
 import { api } from "../../utils/api";
 import { UserContext } from '../context/user_context';
+import  BackButton  from '../../components/Product/Back_Button/back_button';
+import { useNavigate } from 'react-router-dom';
 
 
-export const Product = ({ id, setParentCounter, handleProductLike }) => {
+
+
+export const Product = ({ id, setParentCounter }) => {
+  const navigate = useNavigate();
   //Отображение продукта
   const currentUser = useContext(UserContext);
-  const [product, setProduct] = useState(false);
+  
+  const [product, setProduct] = useState({});
 
-  const [productCount, setProductCount] = useState(0);
+  const [productCount, setProductCount] = useState(1);
   const [liked, setLiked] = useState({});
 
-  console.log({ product });
+  console.log(setParentCounter);
   const isLiked = product?.likes?.some((el) => el === currentUser._id);
 
   useEffect(() => {
@@ -24,10 +30,7 @@ export const Product = ({ id, setParentCounter, handleProductLike }) => {
   }, [id]);
   
   
-  useEffect(() => {
-    const isLiked = product?.likes?.some((el) => el === currentUser._id);
-    setLiked(isLiked);
-  }, [product.likes?.length, product?.likes, currentUser]);
+  
 
 
   
@@ -42,13 +45,16 @@ export const Product = ({ id, setParentCounter, handleProductLike }) => {
   
  
     return (
+      
     <div className={s.container}>
-      <button
-        className={s.delete_button}
-        onClick={() => deleteProduct(productID)}
-      >
-        Удалить X
-      </button>
+          <div className={s.btns_top}>
+                <BackButton/>
+                <button
+                  className={s.delete_button}
+                  onClick={() => deleteProduct(productID)}>
+                  Удалить X
+                </button>
+          </div>
       <div className={s.title}>{product.name}</div>
       <div className={s.product}>
         <div className={s.imgWrapper}>
@@ -80,12 +86,7 @@ export const Product = ({ id, setParentCounter, handleProductLike }) => {
                 +
               </button>
             </div>
-            <button
-              onClick={() => setParentCounter((state) => state + productCount)}
-              className={`btn btn_type_primary ${s.cart}`}
-            >
-              В корзину
-            </button>
+            
           </div>
           <button 
           className={cn(s.favorite, { [s.favoriteActive]: isLiked })}>
@@ -101,13 +102,18 @@ export const Product = ({ id, setParentCounter, handleProductLike }) => {
               </p>
             </div>
           </div>
-          
+          <button
+              onClick={() => setParentCounter((state) => state + productCount)}
+              className={s.cart}
+            >
+              В корзину
+            </button>
         </div>
       </div>
 
       <div className={s.box}>
         <h2 className={s.title}>Описание</h2>
-        <div>{product.description}</div>
+        <div className={s.good_description}>{product.description}</div>
         <h2 className={s.title}>Характеристики</h2>
         <div className={s.grid}>
           <div className={s.naming}>Вес</div>
