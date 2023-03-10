@@ -1,30 +1,40 @@
 import React from 'react';
 import { slide as Menu } from 'react-burger-menu';
 import './hamburgerMenu.css'
+import { useNavigate } from 'react-router-dom';
+import { scrollOnClick } from '../../../utils/utils';
+
+
 export default HamburgerMenu => {
+  const navigate = useNavigate();
+ 
   return (
+    <div>
     <Menu>
-      <a className="menu-item" href="/">
+      <span className="menu-item" onClick={() => {navigate('/'); scrollOnClick()}}>
         Главная
-      </a>
-      <a className="menu-item" href="/salads">
+      </span>
+      <span className="menu-item" >
         О компании
-      </a>
-      <a className="menu-item" href="/pizzas">
+      </span>
+      <span className="menu-item" >
         Новости
-      </a>
-      <a className="menu-item" href="/desserts">
-        Акции
-      </a>
-      <a className="menu-item" href="/desserts">
+      </span>
+      <span className="menu-item">
+        Акции 
+      </span>
+      <span className="menu-item">
         Отзывы
-      </a>
-      <a className="menu-item" href="/desserts">
+      </span>
+      <span className="menu-item">
         Оплата и доставка
-      </a>
-      <a className="menu-item" href="/desserts">
+      </span>
+      <span className="menu-item" onClick={() => {navigate('/faq'); scrollOnClick()}}>
         Часто спрашивают
-      </a>
+      </span>
+      
+       
+      
       <a className="menu-item" href="/desserts">
         Обратная связь
       </a>
@@ -32,5 +42,6 @@ export default HamburgerMenu => {
         Контакты
       </a>
     </Menu>
+    </div>
   );
 };

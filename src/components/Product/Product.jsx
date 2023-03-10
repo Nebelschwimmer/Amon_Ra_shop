@@ -1,6 +1,5 @@
 import s from "./product.module.css";
 import truck from "./images/truck.svg";
-import quality from "./images/quality.svg";
 import cn from "classnames";
 import { ReactComponent as Save } from "./images/save.svg";
 import { useContext, useEffect, useState } from "react";
@@ -8,12 +7,13 @@ import { api } from "../../utils/api";
 import { UserContext } from '../context/user_context';
 import  BackButton  from '../../components/Product/Back_Button/back_button';
 import { useNavigate } from 'react-router-dom';
-
+import { findLike } from "../../utils/utils";
+import { changePrice } from "../../utils/utils";
 
 
 
 export const Product = ({ id, setParentCounter }) => {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   //Отображение продукта
   const currentUser = useContext(UserContext);
   
@@ -23,27 +23,21 @@ export const Product = ({ id, setParentCounter }) => {
   const [liked, setLiked] = useState({});
 
   console.log(setParentCounter);
-  const isLiked = product?.likes?.some((el) => el === currentUser._id);
+  const isLiked = findLike(product, currentUser);
 
   useEffect(() => {
     api.getProductById(id).then((data) => setProduct(data));
   }, [id]);
-  
-  
-  
 
+  const price = product.price
+  const discount = product.discount
 
-  
- 
-  
   //Удаление продукта
   const productID = product._id;
   const deleteProduct = async () => {
     await api.deleteProductById(productID);
   };
 
-  
- 
     return (
       
     <div className={s.container}>
@@ -64,12 +58,24 @@ export const Product = ({ id, setParentCounter }) => {
           ))}
         </div>
         <div className={s.desc}>
-          <span className={s.price}>{product.price}&nbsp;₽</span>
-          {!!product.discount && (
-            <span className={`${s.price} card__price_type_discount`}>
-              {product.discount}&nbsp;%
+        <div className={s.price_wrapper}>
+        {!!product.discount && (
+            <span className={s.discount}>
+             Со скидкой {product.discount}&nbsp;%!
             </span>
           )}
+          
+          <span className={s.price}> {
+          price &&
+          (discount > 0
+          ? <span className='card_price_wrapper'>
+              <span className={s.old_price}>{price} ₽</span>
+              <span> {price - changePrice(price, discount)} ₽ </span>
+            </span>
+          : <span>{price} р.</span>)
+         }           </span>
+         </div>
+          
           <div className={s.btnWrap}>
             <div className={s.left}>
               <button

@@ -3,22 +3,23 @@ import './index.css';
 import { CardContext } from '../context/card_context'; 
 import { useContext } from 'react';
 
-export const CardList = () => {
+export const CardList = ({items}) => {
 
-  const { items, currentUser, setParentCounter, handleProductLike } = useContext(CardContext)
+  const {setParentCounter, handleProductLike } = useContext(CardContext)
   
   return (
     <div className='cards'>
       {items.map((element) => {
        
-        return <Card 
-        {...element} 
-        key={element._id} 
-        currentUser={currentUser}
-        product={element}
-        onProductLike={handleProductLike}
-        setParentCounter={setParentCounter}
-        />;
+        return (
+        <Card 
+          {...element} 
+          key={element._id} 
+          product={element}
+          onProductLike={handleProductLike}
+          setParentCounter={setParentCounter}
+        />
+        )
       })}
     </div>
   );

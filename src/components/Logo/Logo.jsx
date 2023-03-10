@@ -1,5 +1,5 @@
 import logoSrc from './Eye-of-Horus.png';
-import './logo_syle.css';
+import './logo_style.css';
 
 export const Logo = () => {
   return (

@@ -56,13 +56,13 @@ const config = {
         method: 'POST',
         body: JSON.stringify({
           "name": "Ра, статуэтка",
-		"price": 1430,
-		"discount": 5,
-		"wight": "600 г",
-		"description": "Статуэтка верховного божества египтян - Ра (Амон Ра). Материал: алебастр. Ручная работа.",
-		"available": true,
-		"stock": 15,
-		"pictures": "https://i.pinimg.com/originals/45/e2/e6/45e2e65006da9b3c9fd1699af68c8654.jpg"
+          "price": 1430,
+          "discount": 5,
+          "wight": "600 г",
+          "description": "Статуэтка верховного божества египтян - Ра (Амон Ра). Материал: алебастр. Ручная работа.",
+          "available": true,
+          "stock": 15,
+          "pictures": "https://i.pinimg.com/originals/45/e2/e6/45e2e65006da9b3c9fd1699af68c8654.jpg"
          
            }),
         }).then((res) => onResponse(res)); 
@@ -95,8 +95,16 @@ const config = {
           headers: this._headers,
         });  
       }
+      
+      signUpUser(data){
+        return fetch(`${this._baseUrl}/signup`, {
+          headers: this._headers,
+          method: 'POST',
+          body: JSON.stringify(data),
+        }).then((res) => onResponse(res));
       }
-
+    }
+    
       
        
 

@@ -1,21 +1,27 @@
 .home_container {
 
 background-color: white;
-
 padding-top: 20px;
-display: flex;
-flex-direction: column;
-justify-content: center; 
+opacity: 0.9;
+
+
+
 
 }
 .home_image_container{  
-    display: flex;
-    justify-content: center; 
+  
     padding-top:50px;
 }
 
+.home_greeting_image_wrapper{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+    
+}
+
 .home_image {
-    height: 600px;
+    height: 80vh;
 }
 .home_greeting {
 text-align: center;
@@ -23,10 +29,11 @@ color: darkred;
 font-family: 'Reggae One', cursive;    
 }
 .home_description_wrapper{   
-   text-align:justify; 
+   text-align:justify;
+   margin-top: 80px; 
 }
 .home_description {   
-font-size: 18px; 
+font-size: 20px; 
 }
 
 .home_motto {
@@ -48,13 +55,15 @@ line-height: 50px;
 .home_catalogue_link_button{
     background-color:#e7ac2d;
     border: solid 1px black;
-    height: 75px;
+    height: 65px;
     width: 155px;
     padding: 5px;
     border-radius: 10px;
     transition: ease-in 0.1s;
-    font-size: 25px;
-    margin-left: 550px;
+    font-size: 18px;
+    cursor:pointer;
+    border-radius: 5%;
+    white-space: pre-line;
     
     }
     .home_catalogue_link_button:hover{
@@ -62,6 +71,10 @@ line-height: 50px;
       box-shadow: 1px 1px 1px 1px  black; 
       opacity: 0.8;
     
+    }
+
+    .home_button_wrapper{
+    text-align: center;    
     }
 
 

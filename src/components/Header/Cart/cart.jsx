@@ -12,8 +12,9 @@ export default function IconCart({ count, clickFunction }) {
       const StyledBadge = styled(Badge)(({ theme }) => ({
         '& .MuiBadge-badge': {
           right: -3,
-          
-          border: `1px solid ${theme.palette.background.paper}`,
+          backgroundColor: 'chocolate',
+          color:'white',
+         
           padding: '0 4px',
          
         },

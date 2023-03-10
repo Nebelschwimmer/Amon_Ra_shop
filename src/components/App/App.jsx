@@ -3,7 +3,7 @@ import { Footer } from '../Footer/Footer';
 import { Header } from '../Header/Header';
 import './App.css';
 import { api } from '../../utils/api';
-import { useDebounce } from '../../utils/utils';
+import { useDebounce, findLike } from '../../utils/utils';
 import { Route, Routes, useNavigate } from 'react-router-dom';
 import { ProductPage } from '../../pages/ProductPage/ProductPage';
 import { CataloguePage} from '../../pages/CataloguePage/CataloguePage';
@@ -11,6 +11,9 @@ import { Categories } from '../Categories/categories';
 import { CardContext } from '../context/card_context';
 import { UserContext } from '../context/user_context';
 import { HomePage } from '../../pages/HomePage/HomePage';
+import { FaqPage } from "../../pages/FAQPage/Faq";
+import { FavouritePage } from '../../pages/FavouritePage/FavouritePage';
+
 
 function App() {
 // Добавление use-state
@@ -18,13 +21,16 @@ function App() {
   const [searchQuery, setSearchQuery] = useState("");
   const [parentCounter, setParentCounter] = useState(0);
   const [currentUser, setCurrentUser] = useState({});
+  const [favourites, setFavourites] = useState([]);
+  const [activeModal, setShowModal] = useState(false);
 
  
   //Объявление функции для фильтрации
   const items_filtered = (products, id) => products.filter((el) => el.author._id === id);
  //Объявление функции для поиска
   const handleSearch = (search) => {
-    api.searchProducts(search).then((data) => setItems(items_filtered(data, currentUser._id)))
+    api.searchProducts(search)
+    .then((data) => setItems(items_filtered(data, currentUser._id)))
   };
   
  
@@ -33,16 +39,17 @@ function App() {
 
   //Добавление и удаление лайка
    function handleProductLike(product) {
-    const isLiked = product.likes.some((el) => el === currentUser._id);
+    const isLiked = findLike(product, currentUser);
     isLiked 
     ? api.deleteLike(product._id).then((newItem)=>{
         const newItems = items.map((el)=> el._id === newItem._id ? newItem : el);
         setItems(items_filtered(newItems, currentUser._id));
+        setFavourites((state) => state.filter((f) => f._id !== newItem._id))
     })
     : api.addLike(product._id).then((newItem)=>{
       const newItems = items.map((el)=> el._id === newItem._id ? newItem : el);
       setItems(items_filtered(newItems, currentUser._id));
- 
+      setFavourites((favor) => [...favor, newItem]);
     });
   
 }
@@ -58,13 +65,16 @@ useEffect(() => {
     Promise.all([api.getUserInfo(), api.getProductList()]).then(
       ([userData, productData]) => {
         setCurrentUser(userData);
-        setItems(items_filtered(productData.products, userData._id));
+        const itemsFiltered = items_filtered(productData.products, userData._id);
+        setItems(itemsFiltered);
+        const fav = itemsFiltered.filter((e) => findLike(e, userData));
+        setFavourites(fav)
       }
     );
   }, []);
-
+//Объявление useNavigate
   const navigate = useNavigate();
-
+//Объявление функции для сортировки товаров
   const setSortItems = (sort) => {
     
     if (sort === 'Сначала дешевые') {
@@ -80,7 +90,7 @@ useEffect(() => {
       setItems([...newItems]);
     }
     if (sort === 'Новинки') {
-      const newItems = items.sort((a,b)=> new Date(a.created_at) - new Date(b.created_at));
+      const newItems = items.sort((a,b)=> new Date(b.created_at) - new Date(a.created_at));
       setItems([...newItems]);
     }
     if (sort === 'По скидке') {
@@ -88,22 +98,40 @@ useEffect(() => {
       setItems([...newItems]);
     }
   }
+  //Объявление контекста
+  const contextValue = { 
+    
+    currentUser, 
+    searchQuery, 
+    setSearchQuery, 
+    setParentCounter, 
+    parentCounter, 
+    setSort: setSortItems }
   
-  const contextValue = { currentUser, searchQuery, setSearchQuery, setParentCounter, parentCounter, setSort: setSortItems }
-  const contextCardValue = { items:items, setParentCounter, parentCounter, handleProductLike }
+  const contextCardValue = { 
+    items: items, 
+    setParentCounter, 
+    parentCounter, 
+    handleProductLike, 
+    favourites,
+    setFavourites, 
+  }
 
-  console.log(items)
-  //Тело
+
+
+  //Тело, навигация
   return (
     <>
     <UserContext.Provider value={contextValue}>
         <CardContext.Provider value={contextCardValue}>
     <Header 
-        user={currentUser}
-        parentCounter={parentCounter}
-        searchQuery={searchQuery}
-        setSearchQuery={setSearchQuery} />
-  
+       
+        
+        />
+   
+   
+
+     
     
     <main className='content container'>
         <Routes>      
@@ -114,26 +142,17 @@ useEffect(() => {
           </Route>
         <Route
             path='/catalog'
-            element={
-              <CataloguePage
-                searchQuery={searchQuery}
-                items={items}
-                currentUser={currentUser}
-                handleProductLike={handleProductLike}
-                setParentCounter={setParentCounter}
-              />
-              
-            }
-      >
-        </Route>
+            element={<CataloguePage />  }
+      ></Route>
         <Route path='/product/:productId' 
             element={<ProductPage 
             currentUser={currentUser} 
             setParentCounter={setParentCounter}
             handleProductLike={handleProductLike} />}>
         </Route>
+        <Route path="faq" element={<FaqPage />}></Route>
+        <Route path="favourites" element={<FavouritePage />}></Route>
         <Route path='*' element={
-            
             <div className='error_not_found_title'>Страница не найдена 
             <div className='error_not_found_sad_face'></div>
             <button className='error_not_found_button' 

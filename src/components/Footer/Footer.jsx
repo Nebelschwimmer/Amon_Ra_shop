@@ -1,5 +1,9 @@
 import './footer_style.css'
 import { Logo } from '../Logo/Logo';
+import { Link } from "react-router-dom";
+import { scrollOnClick } from '../../utils/utils';
+
+
 export const Footer = () => {
   return (
     <div className='footer'>
@@ -13,14 +17,14 @@ export const Footer = () => {
       </div>
       <div className='footer_center'>
         <div className='footer_center_right'>
-          <a href="#">Каталог</a>
+        <Link to={"/catalog"} onClick={() => scrollOnClick()}>Каталог</Link>
           <a href="#">Акции</a>
           <a href="#">Новости</a>
           <a href="#">Отзывы</a>
         </div>
         <div className='footer_center_right'>
           <a href="#">Оплата и доставка</a>
-          <a href="#">Часто спрашивают</a>
+          <Link to={"/faq"} onClick={() => scrollOnClick()}>Часто спрашивают</Link>
           <a href="#">Обратная связь</a>
           <a href="#">Контакты</a>
         </div>
