@@ -1,6 +1,7 @@
 import './search_style.css';
 
 export const Search = ({ setSearchQuery, searchQuery }) => {
+  
 
   return(
   <input 

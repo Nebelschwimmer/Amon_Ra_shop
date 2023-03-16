@@ -7,31 +7,15 @@ import IconCart from './Cart/cart';
 import IconLogin from './Login_button/login_button';
 import IconLogout from './Logout_button/logout_button';
 import HamburgerMenu from '../Header/Hamburger_menu/hamburgerMenu';
-import { Ankh_fav } from './Ankh_fav/Ankh_fav';
+import { Ankh } from './Ankh/Ankh';
 import {FavouriteButton} from './Favourite/favourite'
 import { UserContext } from '../context/user_context';
-import { CardContext } from '../context/card_context';
+
 
 
 export const Header = () => {
   const { currentUser, searchQuery, setSearchQuery, parentCounter } =
     useContext(UserContext);
-
-
-
-  
-  //Функция для кнопки добавления нового товара
-  const addProductOnClick = async ()=>{
-   await api.addProduct()
-  }
-  const changeUserInfoOnClick = async ()=>{
-    await api.changeUserInfo()
-   }  
-  const changeUserAvatarOnClick = async ()=>{
-    await api.changeUserAvatar()  
-  }
-
-
 
  //Тело
   return (
@@ -48,25 +32,17 @@ export const Header = () => {
             <Search  searchQuery={searchQuery} setSearchQuery={setSearchQuery}/>    
         </div>
         <div className = 'header_user_buttons'>
-          <Ankh_fav/>
-          <FavouriteButton/>
-          
-          <IconCart count={parentCounter}/>
-          <IconLogin />
-        
+            <IconCart count={parentCounter}/>
+            <FavouriteButton/>
+            <Ankh/>
+            <IconLogin />
         </div>
         <div className='user_info_wrapper'>
             <span><img src={currentUser.avatar} className='user_avatar'/></span>
             <span className='user_info'>{currentUser.name}, {' '} {currentUser.about} </span>
-           <IconLogout/>
+            <IconLogout/>
         </div>
-        <div className = 'header_admin_buttons'>
-          <button className='button_add' onClick={() => addProductOnClick()}>Добавить товар</button>
-          <button className =' button_change_user_info' onClick={() => changeUserInfoOnClick()} >Изменить данные пользователя</button>
-          <button className =' button_change_user_info' onClick={() => changeUserAvatarOnClick()} >Изменить аватар</button>
-          
         
-        </div>  
       </div>  
   </div>
    

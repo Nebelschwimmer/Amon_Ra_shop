@@ -1,7 +1,7 @@
 import * as React from 'react';
 import IconButton from '@mui/material/IconButton';
 import LoginRoundedIcon from '@mui/icons-material/LoginRounded';
-import { ModalSignUp } from '../../ModalSignUp/ModalSignUp';
+import { ModalSignUp } from '../../Modals/ModalSignUp/ModalSignUp';
 import { SignUpForm } from '../../SignUpForm/SignUpForm';
 import { useState } from 'react';
 import { api } from '../../../utils/api';
@@ -16,7 +16,7 @@ export default function IconLogin() {
  
   
   return ( 
-  <div>
+  <div title="Войти">
      <ModalSignUp activeModal={activeModal} setShowModal={setShowModal}>
   <SignUpForm sendData={sendData} />
 </ModalSignUp>
@@ -27,3 +27,4 @@ export default function IconLogin() {
   </div>
 );
 }
+

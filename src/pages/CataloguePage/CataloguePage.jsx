@@ -1,21 +1,30 @@
 import { CardList } from '../../components/CardList/CardList';
 import { CardContext } from '../../components/context/card_context';
-import { Sort_nav } from '../../components/Sort_nav/Sort_nav';
+import { SortNav } from '../../components/Sort_nav/SortNav';
 import { correctGrammar } from '../../utils/utils';
 import { UserContext } from '../../components/context/user_context';
 import { useContext } from 'react';
 import './catalogue.css'
 import {useNavigate } from 'react-router-dom';
 import { scrollOnClick } from '../../utils/utils';
+import { api } from '../../utils/api';
 
 export const CataloguePage = () => {
   const { items } = useContext(CardContext);
   const { searchQuery} = useContext(UserContext); 
   const itemsLength = items.length
   const navigate = useNavigate();
+  const addProductOnClick = async ()=>{
+    await api.addProduct()
+   }
 
  return <>
-      <Sort_nav/>
+     <div className='button_add_wrapper'>
+     {/* Доработать форму для добавления товара */}
+     <button className='button_add' onClick={() => {addProductOnClick(); console.log("Товар добавлен")}}>Добавить товар</button> 
+     </div>
+     
+      <SortNav/>
       {
           searchQuery &&
           (itemsLength > 0 

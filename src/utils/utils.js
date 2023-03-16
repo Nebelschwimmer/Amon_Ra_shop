@@ -17,9 +17,6 @@ export const useDebounce = (searchQuery, delay = 500) => {
     const timeout = setTimeout(() => {
       setDebounceValue(searchQuery);
     }, delay);
-
- 
-
     return () => clearTimeout(timeout);
   }, [searchQuery]);
   return debounceValue;

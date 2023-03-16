@@ -13,14 +13,15 @@
 	border: none;
 	outline: none;
 	position: relative;
+	font-size: 16px;
 }
 
 
 .accordionButton::before {
-	content: '';
-	width: 14px;
-	height: 2px;
-	background: #333;
+	
+	
+	height: 15px;
+	font-size: 16px;
 	position: absolute;
 	top: calc(50% - 1px);
 	left: 0;
@@ -30,19 +31,21 @@
 
   /* Vertical line */
   .accordionButton::after {
-	content: '';
-	width: 2px;
-	height: 14px;
-	background: #333;
+	
+	height: 15px;
+	
+	font-size: 16px;
 	position: absolute;
 	top: calc(50% - 7px);
 	left: 6px;
-	display: block;
+	display: flex;
 	transition: all 0.1s;
+	flex-direction: row-reverse;
   }
 
   .active .accordionButton::after {
 	transform: rotate(90deg) translateX(-1px);
+	flex-direction: column-reverse;
   }
 
   .active .accordionButton::before {

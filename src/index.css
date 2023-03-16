@@ -19,7 +19,7 @@ body {
 .container {
 
   background-color: white;
-  max-width: 1480px;
+  max-width: 1124px;
 	padding-left: 1rem;
 	padding-right: 1rem;
 	width: 95%;
@@ -29,11 +29,14 @@ body {
   overflow-x:hidden;
   opacity: 0.95;
   position: relative;
-  top:170px
+  top:140px
 }
 
 
 .content {
-	padding: 50px;
+	padding-right: 30px;
+  padding-top: 50px;
+  padding-left: 70px;
+  padding-bottom: 30px;
   
 }

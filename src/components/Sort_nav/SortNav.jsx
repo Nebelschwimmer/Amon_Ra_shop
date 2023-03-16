@@ -2,7 +2,7 @@ import './Sort_nav.css';
 import { UserContext } from '../context/user_context';
 import { useContext } from 'react';
 
-export const Sort_nav = ({}) => {
+export const SortNav = () => {
 
     const items_sorted = [{ id: 'Популярные' },  { id: 'Новинки' }, { id: 'Сначала дешевые' }, { id: 'Сначала дорогие' }, { id: 'По скидке' }]
     const { setSort } = useContext(UserContext);

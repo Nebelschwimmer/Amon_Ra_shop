@@ -2,7 +2,7 @@ import './homePage.css'
 import { useNavigate } from 'react-router-dom';
 import { scrollOnClick } from '../../utils/utils';
 import imgSrc from './tutankhamun.png';
-
+import { SideBar } from '../../components/SideBar/SideBar';
 
 export const HomePage = () => { 
   
@@ -18,19 +18,24 @@ export const HomePage = () => {
                 <p className="home_description">Отсюда и два главных цвета древнеегипетского искусства: золотой и черный. Золотой - символ Солнца; его божеством у египтян был Амон-Ра, верховный бог.</p>
                 <p className="home_description">В то время как черный символизирует Тьму ночи и связанный с ней благоговейный страх перед неизведанным.</p>
                 <h3 className='home_motto'>Ощутите мистику Древнего Египта, приобретя товары на нашем сайте!</h3>
-            <ul className="home_categories_list"> <em className='home_categories_list_title'>У нас вы найдете:</em>
-                <li>Предметы интерьера (декоративные статуэтки, папирусы, постельное белье, гобелены)</li>
-                <li>Ювелирные украшения и аксессуары с древнеегипетской тематикой</li>
-                <li>Книги по тематике Древнего Египта (история, язык, литературные произведения)</li>   
-            </ul>
+            <div className='home_you_will_find'>
+                <ul className="home_categories_list"> <em className='home_categories_list_title'>У нас вы найдете:</em>
+                    <li>Предметы интерьера (декоративные статуэтки, папирусы, постельное белье, гобелены)</li>
+                    <li>Ювелирные украшения и аксессуары с древнеегипетской тематикой</li>
+                    <li>Книги по тематике Древнего Египта (история, язык, литературные произведения)</li>   
+                </ul>
+            </div>
+            <div className='home_button_wrapper'>
+                    <button className='home_catalogue_link_button' onClick={() => {navigate('/catalog'); scrollOnClick()}}>Каталог товаров</button> 
+                    <button className='home_catalogue_link_button' onClick={() => {navigate('/private'); scrollOnClick()}}>Личный кабинет</button> 
+                    </div>
             </div> 
             <div className='home_image_container'>
                 <img className="home_image" src={imgSrc} alt="Homepage"/> 
             </div>
+                    
         </div> 
-            <div className='home_button_wrapper'>
-            <button className='home_catalogue_link_button' onClick={() => {navigate('/catalog'); scrollOnClick()}}>Каталог товаров</button> 
-            </div>
+         <SideBar/>   
             
     </div>
     )

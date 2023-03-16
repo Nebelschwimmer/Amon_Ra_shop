@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import { UserContext } from '../context/user_context';
 import { findLike } from '../../utils/utils';
 import { changePrice } from '../../utils/utils';
-
+import { scrollOnClick } from '../../utils/utils'; 
 export const Card = ({
   pictures, 
   name, 
@@ -65,9 +65,9 @@ export const Card = ({
           <p className='card__name'>{name}</p>
         </div>
         </Link>
-      <span className='card__card btn btn_type_primary' 
+      <span className='card__cart' 
       onClick={() => setParentCounter((state) => state + 1)}
-      id='basket'>
+      >
         В корзину
       </span>
       

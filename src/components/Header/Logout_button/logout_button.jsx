@@ -5,7 +5,7 @@ import LogoutRoundedIcon from '@mui/icons-material/LogoutRounded';
 
 export default function IconLogout() {  
     return ( 
-    <div>
+    <div title="Выйти">
       <IconButton className='icon_button' aria-label='Выйти'>
           <LogoutRoundedIcon className='login_button' fontSize='large' />
       </IconButton>

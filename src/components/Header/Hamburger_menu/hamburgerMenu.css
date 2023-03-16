@@ -1,10 +1,10 @@
 /* Position and sizing of burger button */
 .bm-burger-button {
-    position: fixed;
+    position: relative;
     width: 35px;
     height: 20px;
-    left: 35px;
-    top: 70px;
+    margin-left:-50px ;
+  
   }
   
   /* Color/shape of burger icon bars */
@@ -21,8 +21,8 @@
   .bm-cross-button {
     height: 20px;
     width: 20px;
-    position: fixed;
-    left:160px
+    position: relative;
+    right:0
   }
 
 
@@ -36,6 +36,7 @@
   .bm-cross {
     background: #b57f22;
     
+    
   }
   .bm-cross:hover {
     color: #242424;
@@ -46,10 +47,10 @@
   Note: Beware of modifying this element as it can break the animations - you should not need to touch it in most cases
   */
   .bm-menu-wrap {
-    position: fixed;
+    position: relative;
     height: 50%;
-    right:100px;
-    top:153px;
+   left: 0;
+    top:131px;
     
   
     
@@ -58,12 +59,12 @@
   /* General sidebar styles */
   .bm-menu {
     background: #ffedc6;
-    padding: 2.5em 1.5em 0;
+    padding: 1.5em 1.5em 0;
     font-size: 1.5em;
     opacity: 0.8;
     width: 305px;
     position: relative;
-    right:100px;
+    
     overflow:hidden !important;
     
     
@@ -78,7 +79,7 @@
     overflow: hidden;
   }
    
-  /* Individual item */
+ 
   .bm-item {
     display: inline-block;
   }
@@ -91,17 +92,19 @@
     display: inline-block;
     font-size: 17px;
     font-weight: 500;
-    line-height: 40px;
+    line-height: 42px;
     font-family: 'Reggae One', cursive;
     background-color: transparent;
     border:none;
     cursor: pointer;
-  
     color: #000000;
     margin-bottom: 10px;
     text-align: left;
     text-decoration: none;
-    transition: color 0.2s;
+    transition: ease-in color 0.2s;
+    border-bottom: 1px solid rgb(238, 227, 205);
+
+
   }
   
   .bm-item:hover {
@@ -109,8 +112,8 @@
   }
   .bm-overlay {
     background: rgba(0, 0, 0, 0.3);
-    right:0;
-    top:153px;
-    overflow: hidden;
+    left:0;
+    top:131px;
+   
    
   }

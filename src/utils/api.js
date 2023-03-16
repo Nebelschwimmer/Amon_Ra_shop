@@ -17,8 +17,8 @@ const config = {
       this._baseUrl = data.baseUrl;
       this._headers = data.headers;
     }
-    getProductList(page=2) {
-      return fetch(`${this._baseUrl}/products?page=${page}`, {
+    getProductList() {
+      return fetch(`${this._baseUrl}/products`, {
         headers: this._headers,
       }).then((res) => onResponse(res));
     }
@@ -55,15 +55,15 @@ const config = {
         headers: this._headers,
         method: 'POST',
         body: JSON.stringify({
-          "name": "Ра, статуэтка",
-          "price": 1430,
-          "discount": 5,
-          "wight": "600 г",
-          "description": "Статуэтка верховного божества египтян - Ра (Амон Ра). Материал: алебастр. Ручная работа.",
-          "available": true,
-          "stock": 15,
-          "pictures": "https://i.pinimg.com/originals/45/e2/e6/45e2e65006da9b3c9fd1699af68c8654.jpg"
-         
+          "name": "Маат, статуэтка",
+		"price": 690,
+		"discount": 0,
+		"wight": "460 г",
+		"description": "Статуэтка богини справедливости Маат. Пластик",
+		
+		"available": true,
+		"stock": 18,
+		"pictures": "http://content.podarki.ru/goods-images/d69cd42c-71a9-4833-9f98-e90ecdd498fd.jpg"
            }),
         }).then((res) => onResponse(res)); 
        }  

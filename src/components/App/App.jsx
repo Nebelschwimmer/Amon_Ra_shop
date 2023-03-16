@@ -13,6 +13,9 @@ import { UserContext } from '../context/user_context';
 import { HomePage } from '../../pages/HomePage/HomePage';
 import { FaqPage } from "../../pages/FAQPage/Faq";
 import { FavouritePage } from '../../pages/FavouritePage/FavouritePage';
+import { Private } from '../../pages/Private/Private';
+import { ModalDelete } from '../Product/ModalDelete/ModalDelete';
+
 
 
 function App() {
@@ -22,7 +25,7 @@ function App() {
   const [parentCounter, setParentCounter] = useState(0);
   const [currentUser, setCurrentUser] = useState({});
   const [favourites, setFavourites] = useState([]);
-  const [activeModal, setShowModal] = useState(false);
+  
 
  
   //Объявление функции для фильтрации
@@ -100,7 +103,6 @@ useEffect(() => {
   }
   //Объявление контекста
   const contextValue = { 
-    
     currentUser, 
     searchQuery, 
     setSearchQuery, 
@@ -122,33 +124,31 @@ useEffect(() => {
   //Тело, навигация
   return (
     <>
+    
     <UserContext.Provider value={contextValue}>
         <CardContext.Provider value={contextCardValue}>
-    <Header 
-       
-        
-        />
-   
-   
-
+    <Header/>   
      
-    
     <main className='content container'>
+    
         <Routes>      
         <Route path="/"
-          element={<HomePage/>
-        }
+          element={<HomePage/>}
           >
           </Route>
         <Route
             path='/catalog'
             element={<CataloguePage />  }
       ></Route>
+        <Route
+        path='/private'
+        element={<Private/>}>
+
+        </Route>
+        
         <Route path='/product/:productId' 
             element={<ProductPage 
-            currentUser={currentUser} 
-            setParentCounter={setParentCounter}
-            handleProductLike={handleProductLike} />}>
+             />}>
         </Route>
         <Route path="faq" element={<FaqPage />}></Route>
         <Route path="favourites" element={<FavouritePage />}></Route>

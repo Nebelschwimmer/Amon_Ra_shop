@@ -22,11 +22,11 @@ export const SignUpForm = ({ sendData, flag = true }) => {
   const nameRegister = {
     required: {
       value: flag,
-      message: "Это поле очень очень обязательное",
+      message: "Это поле обязательное",
     },
     minLength: {
-      value: 2,
-      message: "Такое short имя нельзя",
+      value: 3,
+      message: "Слишком короткое имя. Введите минимум 3 символа",
     },
   };
 
@@ -35,11 +35,11 @@ export const SignUpForm = ({ sendData, flag = true }) => {
     <>
       <div style={{ padding: "50px" }}>
         <form onSubmit={handleSubmit(onSubmit)} className="form">
-          <h3>Registration</h3>
+          <h3>Регистрация</h3>
           <input
             type="text"
             {...register("name", nameRegister)}
-            placeholder="Name"
+            placeholder="Введите имя"
             className="form__input"
           />
           {errors?.name && (
@@ -48,21 +48,21 @@ export const SignUpForm = ({ sendData, flag = true }) => {
           <input
             type="text"
             {...register("email")}
-            placeholder="email"
+            placeholder="Введите Ваш e-mail"
             className="form__input"
           />
           <div className="form__eye-wrapper">
             <input
               type={type ? "text" : "password"}
               {...register("password", {
-                required: "password is required",
+                required: "Необходимо придумать пароль",
                 pattern: {
                   message:
                     "Пароль должен содержать минимум 8 символов, одну букву латинского алфавита и одну цифру",
                   value: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/,
                 },
               })}
-              placeholder="password"
+              placeholder="Пароль"
               className="form__input"
             />
             <span className="form__eye" onClick={() => setType(!type)}>
