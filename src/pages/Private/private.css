@@ -1,17 +1,25 @@
 .private_container {
     text-align: right;
     overflow: hidden;
-    height: 600px;
+    height: 500px;
     padding-left: 50px;
     padding-right: 50px;
    
 }
-.private_title{
+.private_user_info_title{
     text-align: left;
-    width:fit-content
+    width:fit-content;
+    margin-bottom: 15px;
 }
+.private_user_data_wrapper{
+    text-align: left;
+    width: 100%;
+}
+
+
 .private_user_data{
     font-size: 28px;
+    
     
 }
 .private_user_info_input{
@@ -32,38 +40,75 @@
     height:20px;
     display: flex;
     justify-content: space-around;
-    align-items:flex-end;
+    align-items:center;
     gap:10px
    
 }
 .private_user_info{
 display: flex;
 justify-content: flex-start;
-align-items: flex-end; 
+align-items: flex-start; 
 flex-direction: column;
 gap: 3rem; 
 font-size: 20px;
-text-align: right
 
+width: 700px
 }
 
 .private_image_info {
     display: grid;
-    grid-template-columns: repeat(2, 0.8fr);
+    grid-template-columns: 1fr 1fr;
     gap: 1rem;
-    height: 500px;
+    height: 350px;
+    border: 1px rgb(234, 234, 234) solid;
+    border-radius: 5px;
+    padding-top: 30px;
 }
 
 .private_image_wrapper{
-   height:200px;
-   width:200px 
+   height:230px;
+   width:230px 
 }
 .private_image {
-    max-height:500px;
-   max-width:300px;
+   height:200px;
+   width:200px;
+   object-fit:cover;
+   
    border-radius: 15px; 
    cursor: pointer;
+   border-radius: 50%;
 }
 .private_image:hover {
  content: '';   
 }
+
+.info_grid{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap:15px;
+ 
+}
+
+.private_user_info_titles_container{
+    display: grid;
+    grid-template-rows: repeat(3, 0.4fr);
+    width:120%;
+}
+.private_user_info_inputs_container{
+display: grid;
+    grid-template-rows: repeat(3, 0.3fr);
+}
+.private_input_icon{
+    display: flex;
+    align-items: center;
+    gap:6px;
+
+}
+.private_edit_icon{
+    color: rgb(210, 210, 210);   
+    cursor: pointer;
+}
+.private_edit_icon:hover{
+    color: rgb(253, 183, 103);   
+}
+

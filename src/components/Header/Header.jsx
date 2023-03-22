@@ -10,12 +10,17 @@ import HamburgerMenu from '../Header/Hamburger_menu/hamburgerMenu';
 import { Ankh } from './Ankh/Ankh';
 import {FavouriteButton} from './Favourite/favourite'
 import { UserContext } from '../context/user_context';
+import { Link, useNavigate } from "react-router-dom";
 
 
-
-export const Header = () => {
-  const { currentUser, searchQuery, setSearchQuery, parentCounter } =
+export const Header = ({setShowModal}) => {
+  const { currentUser, searchQuery, setSearchQuery, parentCounter, isAuthenticated } =
     useContext(UserContext);
+
+    const navigate = useNavigate();
+
+    
+
 
  //Тело
   return (
@@ -32,16 +37,27 @@ export const Header = () => {
             <Search  searchQuery={searchQuery} setSearchQuery={setSearchQuery}/>    
         </div>
         <div className = 'header_user_buttons'>
-            <IconCart count={parentCounter}/>
-            <FavouriteButton/>
-            <Ankh/>
+        {isAuthenticated ?
+            <div className='header_auth_available_items'>
+              <IconCart count={parentCounter}/>
+              <FavouriteButton/>
+              <Ankh/>
+            <div className='user_info_wrapper'>
+                <span><img src={currentUser.avatar} className='user_avatar'/></span>
+                <span className='user_info'>{currentUser.name}, {' '} {currentUser.about} </span>
+            </div>
+        </div>
+        : ''
+        }
+            {!isAuthenticated ? <Link to={"/login"} className="header__link" onClick={() => setShowModal(true)}>
             <IconLogin />
+            </Link> 
+            :
+            
+            <IconLogout />
+          }
         </div>
-        <div className='user_info_wrapper'>
-            <span><img src={currentUser.avatar} className='user_avatar'/></span>
-            <span className='user_info'>{currentUser.name}, {' '} {currentUser.about} </span>
-            <IconLogout/>
-        </div>
+       
         
       </div>  
   </div>

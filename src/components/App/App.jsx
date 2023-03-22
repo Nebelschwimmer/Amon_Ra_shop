@@ -7,16 +7,18 @@ import { useDebounce, findLike } from '../../utils/utils';
 import { Route, Routes, useNavigate } from 'react-router-dom';
 import { ProductPage } from '../../pages/ProductPage/ProductPage';
 import { CataloguePage} from '../../pages/CataloguePage/CataloguePage';
-import { Categories } from '../Categories/categories';
 import { CardContext } from '../context/card_context';
 import { UserContext } from '../context/user_context';
 import { HomePage } from '../../pages/HomePage/HomePage';
 import { FaqPage } from "../../pages/FAQPage/Faq";
 import { FavouritePage } from '../../pages/FavouritePage/FavouritePage';
 import { Private } from '../../pages/Private/Private';
-import { ModalDelete } from '../Product/ModalDelete/ModalDelete';
-
-
+import { Modal } from '../Modal/Modal';
+import { LogIn } from "../Auth/LogIn/LogIn";
+import { Register } from "../Auth/Register/Register";
+import { ResetPassword } from "../Auth/ResetPassword/ResetPassword";
+import { parseJwt } from '../../utils/parseJWT';
+import { NotAuth } from '../../pages/NotAuth/NotAuth';
 
 function App() {
 // Добавление use-state
@@ -25,11 +27,14 @@ function App() {
   const [parentCounter, setParentCounter] = useState(0);
   const [currentUser, setCurrentUser] = useState({});
   const [favourites, setFavourites] = useState([]);
-  
+  const [activeModal, setShowModal] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false);
+
 
  
   //Объявление функции для фильтрации
-  const items_filtered = (products, id) => products.filter((el) => el.author._id === id);
+  const items_filtered = (products) => products.filter((el) => el.author.name === 'Nebelschwimmer');
  //Объявление функции для поиска
   const handleSearch = (search) => {
     api.searchProducts(search)
@@ -54,16 +59,16 @@ function App() {
       setItems(items_filtered(newItems, currentUser._id));
       setFavourites((favor) => [...favor, newItem]);
     });
-  
+    return isLiked;
 }
   
 
-// Use-effects
+// Use-effect для поиска
 useEffect(() => {
   if (debounceValueInApp === undefined) return;
   handleSearch(debounceValueInApp);
 }, [debounceValueInApp]);
-
+// Use-effects для отображения товаров, пользователя, избранного
   useEffect(() => {
     Promise.all([api.getUserInfo(), api.getProductList()]).then(
       ([userData, productData]) => {
@@ -74,14 +79,27 @@ useEffect(() => {
         setFavourites(fav)
       }
     );
-  }, []);
-//Объявление useNavigate
-  const navigate = useNavigate();
-//Объявление функции для сортировки товаров
+  }, [isAuthenticated]);
+
+  //Объявление useNavigate
+const navigate = useNavigate();
+
+
+  // Use-effect для установления статуса аутентификации пользователя
+  useEffect(() => {
+    const token = localStorage.getItem('token')
+ const uncodedToken = parseJwt(token);
+ if (uncodedToken?._id) {
+   setIsAuthenticated(true)
+ }
+}, [navigate]);
+
+
+  //Объявление функции для сортировки товаров
   const setSortItems = (sort) => {
     
     if (sort === 'Сначала дешевые') {
-      const newItems= items.sort((a,b)=> a.price - b.price);
+      const newItems = items.sort((a,b)=> a.price - b.price);
       setItems([...newItems]);
     }
     if (sort === 'Сначала дорогие') {
@@ -101,6 +119,13 @@ useEffect(() => {
       setItems([...newItems]);
     }
   }
+// Функция выхода из аккаунта 
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    navigate('/login');
+    setIsAuthenticated(false)
+  }
+
   //Объявление контекста
   const contextValue = { 
     currentUser, 
@@ -108,7 +133,11 @@ useEffect(() => {
     setSearchQuery, 
     setParentCounter, 
     parentCounter, 
-    setSort: setSortItems }
+    setSort: setSortItems,
+    isAuthenticated,
+    handleLogout,
+    isAdmin,
+    setIsAdmin }
   
   const contextCardValue = { 
     items: items, 
@@ -116,9 +145,34 @@ useEffect(() => {
     parentCounter, 
     handleProductLike, 
     favourites,
-    setFavourites, 
+    setFavourites,
+    setItems 
   }
-
+// Маршрутизация при авторизации 
+  const authRoutes = <> <Route
+    path="login"
+    element={
+      <Modal activeModal={activeModal} setShowModal={setShowModal}>
+        <LogIn setShowModal={setShowModal} />
+      </Modal>
+    }
+  ></Route>
+    <Route
+      path="register"
+      element={
+        <Modal activeModal={activeModal} setShowModal={setShowModal}>
+          <Register setShowModal={setShowModal} />
+        </Modal>
+      }
+    ></Route>
+    <Route
+      path="reset-password"
+      element={
+        <Modal activeModal={activeModal} setShowModal={setShowModal}>
+          <ResetPassword setShowModal={setShowModal} />
+        </Modal>
+      }
+    ></Route></>
 
 
   //Тело, навигация
@@ -127,12 +181,12 @@ useEffect(() => {
     
     <UserContext.Provider value={contextValue}>
         <CardContext.Provider value={contextCardValue}>
-    <Header/>   
-     
+    <Header setShowModal={setShowModal}/>   
+    {isAuthenticated ? 
     <main className='content container'>
     
         <Routes>      
-        <Route path="/"
+        <Route path='/'
           element={<HomePage/>}
           >
           </Route>
@@ -152,6 +206,7 @@ useEffect(() => {
         </Route>
         <Route path="faq" element={<FaqPage />}></Route>
         <Route path="favourites" element={<FavouritePage />}></Route>
+        {authRoutes}
         <Route path='*' element={
             <div className='error_not_found_title'>Страница не найдена 
             <div className='error_not_found_sad_face'></div>
@@ -159,9 +214,23 @@ useEffect(() => {
             onClick={() => navigate('/')}>На главную
             </button>
             </div>}>
-        </Route> 
+        </Route>
+        <Route path="not_authenticated" element={<NotAuth />}></Route> 
       </Routes>    
     </main>  
+    
+    :
+    
+    
+    <div  className="not__auth">Пожалуйста, авторизуйтесь
+    
+      <button className='not_auth_btn' onClick={()=>{navigate('/login')}}> Вход / Регистрация</button>
+      <Routes>
+        {authRoutes}
+      </Routes>
+      </div>
+    
+}
     <Footer/>
     </CardContext.Provider>
     </UserContext.Provider>      

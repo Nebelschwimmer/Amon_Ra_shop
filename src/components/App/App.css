@@ -27,5 +27,34 @@ background-repeat: no-repeat;
 width: 270px;
 height: 270px;
 opacity:0.1;
-}    
+}  
+
+.not__auth {
+    display: flex;
+    flex: 1 0 auto;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+   
+   
+    font-size: 24px;
+    height: 100vh;
+    flex-direction: column;
+    gap:20px;
+     
+  }
+.not_auth_btn{
+    height:50px;
+    background-color:#ffd477;
+    font-size: 15px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: 0.1s ease-in-out;
+    padding: 10px;
+    
+}
+.not_auth_btn:hover{
+    background-color:#ffbf36    
+}
+  
 

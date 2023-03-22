@@ -11,7 +11,7 @@ export const correctGrammar = (number) => {
 //Функция для отсрочки апи-запроса для поиска
 export const useDebounce = (searchQuery, delay = 500) => {
   const [debounceValue, setDebounceValue] = useState(searchQuery);
-  console.log({ searchQuery });
+ 
 
   useEffect(() => {
     const timeout = setTimeout(() => {

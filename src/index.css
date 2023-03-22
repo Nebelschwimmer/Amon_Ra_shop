@@ -29,7 +29,8 @@ body {
   overflow-x:hidden;
   opacity: 0.95;
   position: relative;
-  top:140px
+  top:140px;
+  min-height:65vh
 }
 
 

@@ -13,7 +13,7 @@ export const Faq_Accordion = ({ children, title }) => {
   return (
     <div className={cn(s.accordion, { [s.active]: selected })}>
       <button className={s.accordionButton} onClick={() => toggleState()}>
-     <ArrowBackIosIcon className={s.accordionButton} ></ArrowBackIosIcon>
+     <ArrowBackIosIcon className={s.accordionButton}  ></ArrowBackIosIcon>
         <p className={s.title}>{title}</p>
       </button>
       <div className={s.content}>

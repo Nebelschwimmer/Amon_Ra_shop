@@ -1,12 +1,11 @@
 import cn from "classnames";
-import "./modalSignUp.css";
+import "./modal.css";
 
-export const ModalSignUp = ({ activeModal, children, setShowModal }) => {
+export const Modal = ({ activeModal, children}) => {
   return (
     <>
       <div
         className={cn("modal", { ["active"]: activeModal })}
-        onClick={() => setShowModal(false)}
       >
         <div
           className={cn("modal_content", { ["active"]: activeModal })}

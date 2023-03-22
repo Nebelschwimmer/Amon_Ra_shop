@@ -31,8 +31,8 @@ export default HamburgerMenu => {
         Каталог
       </span>
       
-      <span className="menu-item" onClick={() => {navigate('/catalog'); scrollOnClick(); handleCloseMenu()}}  >
-        О компании
+      <span className="menu-item" onClick={() => {navigate('/favourites'); scrollOnClick(); handleCloseMenu()}}  >
+        Избранное
       </span>
       
       <span className="menu-item" onClick={() => {navigate('/catalog'); scrollOnClick(); handleCloseMenu()}} >
