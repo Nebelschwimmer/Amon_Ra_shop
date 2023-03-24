@@ -81,13 +81,14 @@ export const LogIn = ({ setShowModal }) => {
           {errors?.password && (
             <span className="auth__info">{errors.password?.message}</span>
           )}
-          {!errors?.password ?
+          {!errors?.password &&
                      <span className="auth__eye_register" onClick={() => setType(!type)}>
                         {type ? <VisibilityOffIcon/> : <VisibilityIcon/>}
                     </span>
-                    : ''
+                    
                     }
 
+          <span className="auth__info auth__link" onClick={() => navigate('/reset-password')}>Восстановить пароль</span>
           
           
           <div className="auth__actions">

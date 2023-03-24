@@ -83,7 +83,7 @@ export const ResetPassword = ({ setShowModal }) => {
                     {tokenResp && <><input
                         type={"password"}
                         {...passwordRegister}
-                        placeholder="password"
+                        placeholder="Новый пароль"
                         className="auth__input"
                         disabled={!tokenResp}
                     />
@@ -92,8 +92,8 @@ export const ResetPassword = ({ setShowModal }) => {
                         )}
                         <input
                             type={"text"}
-                            {...register('token', { required: tokenResp ? 'Token обязателен' : false })}
-                            placeholder="token"
+                            {...register('token', { required: tokenResp ? 'Кодовая строка обязательна' : false })}
+                            placeholder="Кодовая строка"
                             className="auth__input"
                             disabled={!tokenResp}
                         /></>}
