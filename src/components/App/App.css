@@ -1,0 +1,60 @@
+.error_not_found_title {
+font-size: 25px;
+display: flex;
+flex-direction: column;
+gap:50px;
+align-items: center;
+width: 100%;
+height:500px;    
+}
+.error_not_found_button {
+    background-color:#f6dda7;
+    border: solid 1px black;
+    height: 30px;
+    width: 150px;
+    padding: 5px;
+    border-radius: 10px;
+    transition: ease-in 0.1s;
+}
+.error_not_found_button:hover{
+background-color:rgba(248, 174, 14, 0.5);
+box-shadow: 1px 1px 0px 0px  black; 
+}
+.error_not_found_sad_face {
+background-image: url('/src/sad-face.png');    
+background-size: contain;
+background-repeat: no-repeat;
+width: 270px;
+height: 270px;
+opacity:0.1;
+}  
+
+.not__auth {
+    display: flex;
+    flex: 1 0 auto;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+   
+   
+    font-size: 24px;
+    height: 100vh;
+    flex-direction: column;
+    gap:20px;
+     
+  }
+.not_auth_btn{
+    height:50px;
+    background-color:#ffd477;
+    font-size: 15px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: 0.1s ease-in-out;
+    padding: 10px;
+    
+}
+.not_auth_btn:hover{
+    background-color:#ffbf36    
+}
+  
+
