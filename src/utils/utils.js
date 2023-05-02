@@ -1,17 +1,24 @@
 import { useEffect, useState } from "react";
 
 //Функция для корректировки грамматики в ответе на поисковой запрос
-export const correctGrammar = (number) => {
+export const correctGrammarSearch = (number) => {
   const query_number = number % 10;
   if (query_number === 1) return ' товар';
+  if (query_number === 11) return ' товаров';
   if (query_number > 1 && query_number < 5) return ' товара';
   if (query_number > 4 || !query_number) return ' товаров';
+};
+//Функция для корректировки грамматики в отображении кол-ва отзывов
+export const correctGrammarReviews = (number) => {
+  const query_number = number % 10;
+  if (query_number === 1) return 'отзыв';
+  if (query_number > 1 && query_number < 5) return ' отзыва';
+  if (query_number > 4 || !query_number) return ' отзывов';
 };
 
 //Функция для отсрочки апи-запроса для поиска
 export const useDebounce = (searchQuery, delay = 500) => {
   const [debounceValue, setDebounceValue] = useState(searchQuery);
- 
 
   useEffect(() => {
     const timeout = setTimeout(() => {

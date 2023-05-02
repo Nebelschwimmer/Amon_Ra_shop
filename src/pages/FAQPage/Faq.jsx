@@ -1,5 +1,6 @@
 
-import { Faq_Accordion } from "../../components/Faq_Accordion/FaqAccordion";
+import { FaqAccordion } from "../../components/FaqAccordion/FaqAccordion";
+import BackButton from "../../components/Product/Back_Button/back_button";
 const dataFaq = [
   {
     header: "Доставка товара в другой город",
@@ -54,12 +55,14 @@ const dataFaq = [
 export const FaqPage = () => {
   return (
     <div>
-      <h1>Часто спрашивают</h1>
+      <BackButton/>
+      <h2>Часто спрашивают</h2>
       {dataFaq.map((e, i) => (
-        <Faq_Accordion key={i} title={e.header}>
+        <FaqAccordion key={i} title={e.header}>
           {e.content}
-        </Faq_Accordion>
+        </FaqAccordion>
       ))}
+      
     </div>
   );
 };

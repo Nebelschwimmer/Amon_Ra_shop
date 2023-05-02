@@ -5,20 +5,13 @@ justify-content: space-around;
 align-items: center;
 overflow: hidden;
 font-family: 'Reggae One', cursive;
-
-
 margin-top: 250px;
 width: 100vw;
 height: 230px;
-
-
-
-
 background-color: #ffc74d;
 }
 
 .footer_left  {
-
 display: flex;
 justify-content: center;
 flex-direction: column;
@@ -34,7 +27,9 @@ top:8px
 display: flex;
 justify-content: center;   
 }
-
+.footer_copyright{
+  font-size: 16px;
+}
 .footer_center a {
 text-decoration: none;
 color: black;
@@ -72,4 +67,95 @@ font-size: 15px;
 }
 .footer_right_contacts_email {
 font-size: 15px;
-}   
+}
+.footer_link_item {
+  font-size: 15px;
+}
+
+
+@media (max-width: 400px) {
+  .footer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items:center;
+    overflow: hidden;
+    font-family: 'Reggae One', cursive;
+    width: 100vw;
+    height: 230px;
+    background-color: #ffc74d;
+    font-size: 12px;    
+    }
+
+  .footer_left_title {
+  font-size: 20px;
+  position: relative;
+  top:8px
+  }
+  .footer_center {
+  height:90%; 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  font-size: 10px;
+  }
+  .footer_center_right {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  height:100%;
+  gap: 7px    
+  }
+  .footer_center_left {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;       
+  }
+  .footer_center a {
+    text-decoration: none;
+    color: black;
+    font-size: 12px;
+    }
+  .footer_right_contacts{
+  display: flex;
+  flex-direction: column;
+  gap:5px;    
+  }
+  .footer_right_contacts_label {
+  font-size: 14px;    
+  }
+  .footer_right_contacts_number {
+  font-size: 8px;    
+  }
+  .footer_right_contacts_email {
+  font-size: 8px;
+  }
+  .footer_link_item {
+    font-size: 8px;
+  }
+  .footer_center {
+    height:40%; 
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+  }
+  .footer_copyright{
+      font-size: 10px;
+      padding-left: 10px;   
+  }
+  .footer_left_title_logo {
+    display: flex;
+    justify-content: flex-start;
+    padding-left: 10px;   
+  }
+  .footer_right_contacts{
+    display: flex;
+    flex-direction: column;
+    gap:10px;
+    padding-top: 14px;
+    padding-right: 5px    
+  }  
+}

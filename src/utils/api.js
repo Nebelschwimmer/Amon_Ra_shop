@@ -30,9 +30,9 @@ const config = {
       this._headers = data.headers;
       this._freshHeaders = data.freshHeaders;
     }
-    getProductList() {
-      return fetch(`${this._baseUrl}/products`, {
-        ...this._freshHeaders(),
+    getProductList(limit = 300) {
+      return fetch(`${this._baseUrl}/products?limit=${limit}`, {
+        headers: this._headers,
       }).then((res) => onResponse(res));
     }
     getProductById(id) {
@@ -49,9 +49,13 @@ const config = {
         ...this._freshHeaders(),
       }).then((res) => onResponse(res));
     }
-
-
-
+    updateUserInfo(body) {
+      return fetch(`${this._baseUrl}/users/me`, {
+        ...this._freshHeaders(),
+        method: "PATCH",
+        body: JSON.stringify(body),
+      }).then((res) => onResponse(res));
+    }
     searchProducts(query) {
       return fetch(`${this._baseUrl}/products/search?query=${query}`, {
         ...this._freshHeaders(),
@@ -70,53 +74,42 @@ const config = {
       }).then((res) => onResponse(res));
 
     }
-      addProduct(data) {
+    addProduct(data) {
       return fetch(`${this._baseUrl}/products`, {
         ...this._freshHeaders(),
-        method: 'POST',
-        body: JSON.stringify({
-          "name": "Ра, статуэтка",
-		"price": 850,
-		"discount": 7,
-		"wight": "800 г",
-		"description": "Ра - древнеегипетский бог солнца, верховное божество в религии древних египтян. Его имя означает «Солнце». Статуэтка станет прекрасным украшением Вашего интерьера. Пластик.",
-		
-		"available": true,
-		"stock": 8,
-		"pictures": "https://i.pinimg.com/originals/45/e2/e6/45e2e65006da9b3c9fd1699af68c8654.jpg"
-           }),
-        }).then((res) => onResponse(res)); 
-       }
-       
-       addReview(productId, body) {
-        return fetch(`${this._baseUrl}/products/review/${productId}`, {
-          ...this._freshHeaders(),
-          method: "POST",
-          body: JSON.stringify(body)
+        method: "POST",
+        body: JSON.stringify(data),
+      }).then((res) => onResponse(res));
+    }
+    updateProduct(productId, body) {
+      return fetch(`${this._baseUrl}/products/${productId}`, {
+        ...this._freshHeaders(),
+        method: "PATCH",
+        body: JSON.stringify(body),
+      }).then((res) => onResponse(res));
+    }
+
+    addReview(productId, body) {
+      return fetch(`${this._baseUrl}/products/review/${productId}`, {
+        ...this._freshHeaders(),
+        method: "POST",
+        body: JSON.stringify(body)
         }).then((res) => onResponse(res));
       }
       
-      deleteReview(productId, reviewId) {
-        return fetch(`${this._baseUrl}/products/review/${productId}/${reviewId}`, {
-          ...this._freshHeaders(),
-          method: 'DELETE'
-        }).then((res) => onResponse(res));
-      }
-    
+    deleteReview(productId, reviewId) {
+      return fetch(`${this._baseUrl}/products/review/${productId}/${reviewId}`, {
+        ...this._freshHeaders(),
+        method: 'DELETE'
+      }).then((res) => onResponse(res));
+    }
+    changeLikeProductStatus(productId, isLiked) {
+      return fetch(`${this._baseUrl}/products/likes/${productId}`, {
+        ...this._freshHeaders(),
+        method: isLiked ? "DELETE" : "PUT",
+      }).then((res) => onResponse(res));
+    }
 
-
-
-
-     changeUserName() {
-      return fetch(`${this._baseUrl}/users/me`, {
-      method: 'PATCH',
-      ...this._freshHeaders(),
-      body: JSON.stringify({
-        name: 'Nebelschwimmer',
-        about: 'Администратор'
-      })
-    });
-  }
   
       changeUserAvatar() {
         return fetch(`${this._baseUrl}/v2/group-10/users/me/avatar`, {
@@ -127,6 +120,13 @@ const config = {
           })
         });
       }
+      updateAvatar(avatar) {
+        return fetch(`${this._baseUrl}/v2/group-10/users/me/avatar`, {
+          ...this._freshHeaders(),
+          method: "PATCH",
+          body: JSON.stringify(avatar),
+        }).then((res) => onResponse(res));
+      }
       
       deleteProductById (productId) {
         return fetch(`${this._baseUrl}/products/${productId}`, {
@@ -134,18 +134,9 @@ const config = {
           ...this._freshHeaders(),
         });  
       }
-      
-      signUpUser(data){
-        return fetch(`${this._baseUrl}/signup`, {
-          ...this._freshHeaders(),
-          method: 'POST',
-          body: JSON.stringify(data),
-        }).then((res) => onResponse(res));
-      }
     }
     
       
-       
 
   
   export const api = new Api(config);

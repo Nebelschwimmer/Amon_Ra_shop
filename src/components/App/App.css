@@ -21,7 +21,7 @@ background-color:rgba(248, 174, 14, 0.5);
 box-shadow: 1px 1px 0px 0px  black; 
 }
 .error_not_found_sad_face {
-background-image: url('/src/sad-face.png');    
+background-image: url('/public/assets/pictures/sad-face.png');    
 background-size: contain;
 background-repeat: no-repeat;
 width: 270px;
@@ -35,13 +35,10 @@ opacity:0.1;
     justify-content: center;
     align-items: center;
     background-color: white;
-   
-   
     font-size: 24px;
     height: 100vh;
     flex-direction: column;
     gap:20px;
-     
   }
 .not_auth_btn{
     height:50px;

@@ -1,0 +1,29 @@
+.edit_form{
+    display: flex;
+    flex-direction: column;
+    gap:10px;
+    border:1px solid rgb(217, 216, 216);
+    margin-bottom: 15px;
+    padding-left: 35px;
+    margin-left: 50px;
+    border-radius: 5px;
+}
+.private__user_inputs{
+    display: flex;
+    flex-direction: column;
+    width:57%;
+    gap:15px;
+    margin-bottom: 10px;
+}
+.private_user_input{
+font-size: 15px;
+outline: none;
+width: fit-content;    
+}
+.private_user_input:focus{
+    font-size: 15px;
+    outline: 1px solid black;    
+    }
+.private_user_span{
+   font-size: 19px; 
+}

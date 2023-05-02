@@ -10,7 +10,7 @@ export default function BackButton() {
   return ( 
   <div>
     <IconButton className='icon_button' aria-label='back' onClick={() => navigate('/catalog')} >
-        <ArrowBackIcon className='login_button' fontSize='large' />
+        <ArrowBackIcon className='login_button' fontSize='medium' />
     </IconButton>
   </div>
 );

@@ -1,62 +1,42 @@
-/* Position and sizing of burger button */
+
 .bm-burger-button {
-    position: relative;
-    width: 35px;
-    height: 20px;
+    position: relative !important;
+    width: 38px !important;
+    height: 20px !important;
     margin-left:-100px ;
-  
+    top: 30px
   }
-  
-  /* Color/shape of burger icon bars */
   .bm-burger-bars {
     background: #373a47;
   }
-  
-  /* Color/shape of burger icon bars on hover*/
   .bm-burger-bars-hover {
     background: #a94600;
   }
-  
-  /* Position and sizing of clickable cross button */
   .bm-cross-button {
     height: 20px;
     width: 20px;
     position: relative;
     right:0
   }
-
-
   .bm-cross-button:hover {
     background: #fbf9f9;
     opacity: 0.4;
     border-radius: 100%;
   }
   
-  /* Color/shape of close button cross */
   .bm-cross {
     background: #b57f22;
-    
-    
   }
   .bm-cross:hover {
     color: #242424;
   }
-  
-  /*
-  Sidebar wrapper styles
-  Note: Beware of modifying this element as it can break the animations - you should not need to touch it in most cases
-  */
+
   .bm-menu-wrap {
     position: relative;
     height: 50%;
-   left: 0;
+    left: 0;
     top:131px;
-    
-  
-    
   }
-  
-  /* General sidebar styles */
   .bm-menu {
     background: #ffedc6;
     padding: 1.5em 1.5em 0;
@@ -64,22 +44,15 @@
     opacity: 0.8;
     width: 305px;
     position: relative;
-    
-    overflow:hidden !important;
-    
-    
+    overflow:hidden !important; 
   }
-  
 
-  
-  /* Wrapper for item list */
-   .bm-item-list {
+  .bm-item-list {
     color: #b8b7ad;
     padding: 0.8em;
     overflow: hidden;
   }
-   
- 
+
   .bm-item {
     display: inline-block;
   }
@@ -103,10 +76,8 @@
     text-decoration: none;
     transition: ease-in color 0.2s;
     border-bottom: 1px solid rgb(238, 227, 205);
-
-
   }
-  
+
   .bm-item:hover {
     color: #ff8e03;
   }
@@ -114,6 +85,28 @@
     background: rgba(0, 0, 0, 0.3);
     left:0;
     top:131px;
-   
-   
+  }
+
+  @media (max-width: 400px) {
+    .bm-burger-button {
+      left: 420px;
+      top:20px
+    }
+    .bm-menu {
+      min-width: 387px;
+      top:123px
+    }
+    .bm-cross-button {
+      height: 20px;
+      width: 20px;
+      position: absolute;
+      left:3280px;
+      top: 130px !important;
+    }
+
+    .bm-overlay {
+      left:0;
+      top:253px  ;
+    }
+
   }

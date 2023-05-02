@@ -15,7 +15,7 @@ const config = {
       this._headers = data.headers;
     }
     
-    registerUser(data){
+    signUp(data){
       return fetch(`${this._baseUrl}/signup`, {
         headers: this._headers,
         method: 'POST',
@@ -23,7 +23,7 @@ const config = {
       }).then((res) => onResponse(res));
     }
   
-    login(dataUser) {
+    signIn(dataUser) {
       return fetch(`${this._baseUrl}/signin`, {
         headers: this._headers,
         method: "POST",
@@ -31,7 +31,7 @@ const config = {
       }).then((res)=>onResponse(res))
     }
     
-    resetPass(email) {
+    resetPassword(email) {
         return fetch(`${this._baseUrl}/forgot-password`, {
             headers: this._headers,
             method: "POST",
@@ -39,7 +39,7 @@ const config = {
           }).then((res)=>onResponse(res))
     }
   
-    changePass(token, password) {
+    changePassword(token, password) {
         return fetch(`${this._baseUrl}/password-reset/${token}`, {
             headers: this._headers,
             method: "PATCH",

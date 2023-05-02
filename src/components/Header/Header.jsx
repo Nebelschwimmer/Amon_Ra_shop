@@ -1,67 +1,79 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Logo } from '../Logo/Logo';
 import { Search } from '../Search/Search';
 import './header_style.css';
-import { api } from '../../utils/api';
-import IconCart from './Cart/cart';
+import CartIcon from './CartIcon/CartIcon';
 import IconLogin from './Login_button/login_button';
 import IconLogout from './Logout_button/logout_button';
-import HamburgerMenu from '../Header/Hamburger_menu/hamburgerMenu';
+import {HamburgerMenu} from './Hamburger_menu/HamburgerMenu';
 import { Ankh } from './Ankh/Ankh';
-import {FavouriteButton} from './Favourite/favourite'
+import {FavouriteIcon} from './FavouriteIcon/FavouriteIcon'
 import { UserContext } from '../context/user_context';
 import { Link, useNavigate } from "react-router-dom";
-
-
+import { Popup } from '../Popup/Popup';
+import { FormAddGood } from '../FormAddGood/FormAddGood';
+import { ModalEditProduct } from '../Product/EditProductForm/ModalEditProduct';
 export const Header = ({setShowModal}) => {
-  const { currentUser, searchQuery, setSearchQuery, parentCounter, isAuthenticated } =
+  // Объявление пропсов контекста
+  const {searchQuery, setSearchQuery, toCartCounter, isAuthenticated } =
     useContext(UserContext);
+  // Стейт для отображения модального окна с формой добавления товаров
+  const [isCreateModalActive, setCreateModal] = useState(false);
 
-    const navigate = useNavigate();
-
-    
-
-
- //Тело
+ //Верстка
   return (
   <div className = 'header' id='head'>
-      <div className = 'header__wrapper'>
-        <div className = 'header__left'>
-       
-        <HamburgerMenu  />
-            <Logo />
-            <div className = 'header_title_wrapper'>
-            <div className = 'header__title'>Амон Ра </div>
-            <div className = 'header_title_description'>Магазин древнеегипетской атрибутики</div>
+    <div className = 'header__wrapper'>
+      {/* Левая часть */}
+      <div className = 'header__left'>
+            
+            {/* Логотип, название и описание */}
+            <div className = 'header_title_and_logo_wrapper' >
+              {/* Меню-гамбургер */}
+            <HamburgerMenu/>
+              <Logo/>
+              <div className = 'header_title_wrapper'>
+                  <div className = 'header__title'>Амон Ра </div>
+                  <div className = 'header_title_description'>Магазин древнеегипетской атрибутики</div>
+              </div>
             </div>
+            {/* Поиск */}
             <Search  searchQuery={searchQuery} setSearchQuery={setSearchQuery}/>    
-        </div>
-        <div className = 'header_user_buttons'>
-        {isAuthenticated ?
-            <div className='header_auth_available_items'>
-              <IconCart count={parentCounter}/>
-              <FavouriteButton/>
-              <Ankh/>
-            <div className='user_info_wrapper'>
-                <span><img src={currentUser.avatar} className='user_avatar'/></span>
-                <span className='user_info'>{currentUser.name}, {' '} {currentUser.about} </span>
+      </div>
+      {/* Правая часть */}
+      <div className='header__right'>
+            <div className = 'header_user_buttons'>
+            {isAuthenticated &&
+                <div className='header_user_buttons'>
+                  <CartIcon count={toCartCounter} />
+                  <FavouriteIcon/>
+                  <Ankh/>
             </div>
-        </div>
-        : ''
-        }
+                
+            }
             {!isAuthenticated ? <Link to={"/login"} className="header__link" onClick={() => setShowModal(true)}>
             <IconLogin />
             </Link> 
             :
-            
             <IconLogout />
-          }
-        </div>
-       
-        
+              
+              }
+              {isAuthenticated &&
+              <div className='header_add_good_button_wrapper'>
+                  <button className='header_add_good_button' onClick={() => setCreateModal(true)}>Добавить товар</button>
+                  {isCreateModalActive && <ModalEditProduct activeModal={isCreateModalActive} setShowModal={setCreateModal}>
+                  <FormAddGood setCreateModal={setCreateModal} />
+                  </ModalEditProduct>}
+              </div>
+              }
+
+
+
+            </div>
+            
       </div>  
+    </div>
   </div>
-   
   
   );
 };

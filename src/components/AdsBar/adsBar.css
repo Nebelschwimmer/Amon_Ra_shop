@@ -1,0 +1,21 @@
+.sideBar_container{
+    background:transparent;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 4rem;
+
+}
+.sideBar_image {
+    height: 300px;
+    width: 500px;
+    border: 1px solid rgb(93, 93, 93);
+    margin-top: 5px;
+    
+}
+.sideBar_wrapper{
+    border: 1px solid rgb(182, 158, 116);
+    padding: 10px 10px 10px 10px;
+    height: 400px;
+    width: 95%;
+    margin-top: 50px;
+}

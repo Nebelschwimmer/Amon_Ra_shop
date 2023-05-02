@@ -1,239 +1,286 @@
-import React, { useEffect, useState } from 'react';
-import { Footer } from '../Footer/Footer';
-import { Header } from '../Header/Header';
-import './App.css';
-import { api } from '../../utils/api';
-import { useDebounce, findLike } from '../../utils/utils';
-import { Route, Routes, useNavigate } from 'react-router-dom';
-import { ProductPage } from '../../pages/ProductPage/ProductPage';
-import { CataloguePage} from '../../pages/CataloguePage/CataloguePage';
-import { CardContext } from '../context/card_context';
-import { UserContext } from '../context/user_context';
-import { HomePage } from '../../pages/HomePage/HomePage';
+import React, { useEffect, useState } from "react";
+import { Footer } from "../Footer/Footer";
+import { Header } from "../Header/Header";
+import "./App.css";
+import { api } from "../../utils/api";
+import { useDebounce } from "../../utils/utils";
+import { Route, Routes, useNavigate } from "react-router-dom";
+import { ProductPage } from "../../pages/ProductPage/ProductPage";
+import { CataloguePage } from "../../pages/CataloguePage/CataloguePage";
+import { CardContext } from "../context/card_context";
+import { UserContext } from "../context/user_context";
+import { HomePage } from "../../pages/HomePage/HomePage";
 import { FaqPage } from "../../pages/FAQPage/Faq";
-import { FavouritePage } from '../../pages/FavouritePage/FavouritePage';
-import { Private } from '../../pages/Private/Private';
-import { Modal } from '../Modal/Modal';
-import { LogIn } from "../Auth/LogIn/LogIn";
-import { Register } from "../Auth/Register/Register";
-import { ResetPassword } from "../Auth/ResetPassword/ResetPassword";
-import { parseJwt } from '../../utils/parseJWT';
-import { NotAuth } from '../../pages/NotAuth/NotAuth';
+import { FavouritePage } from "../../pages/FavouritePage/FavouritePage";
+import { Private } from "../../pages/Private/Private";
+import { Popup } from "../Popup/Popup";
+import { SignIn } from "../Auth/SignIn/SignIn";
+import { SignUp } from "../Auth/SignUp/SignUp";
+import { ChangePassword } from "../Auth/ChangePassword/ChangePassword";
+import { parseJwt } from "../../utils/parseJWT";
+import { NotAuth } from "../../pages/NotAuth/NotAuth";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchUser } from "../../storageToolKit/user/userSlice";
+import { fetchProducts } from "../../storageToolKit/products/productSlice";
+import { Cart} from "../../pages/Cart/Cart";
+import { openNotification } from "../Notification/Notification";
+
 
 function App() {
-// Добавление use-state
-  const [items, setItems] = useState([]);
-  const [searchQuery, setSearchQuery] = useState("");
-  const [parentCounter, setParentCounter] = useState(0);
-  const [currentUser, setCurrentUser] = useState({});
-  const [favourites, setFavourites] = useState([]);
-  const [activeModal, setShowModal] = useState(false);
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [isAdmin, setIsAdmin] = useState(false);
+// Объявление стейтов
+const [items, setItems] = useState([]);
+const [searchQuery, setSearchQuery] = useState("");
+const [toCartCounter, setToCartCounter] = useState(0);
+const [activeModal, setShowModal] = useState(false);
+const [isAuthenticated, setIsAuthenticated] = useState(false);
+const [toCart, setToCart] = useState([]);
 
 
- 
-  //Объявление функции для фильтрации
-  const items_filtered = (products) => products.filter((el) => el.author.name === 'Nebelschwimmer');
- //Объявление функции для поиска
-  const handleSearch = (search) => {
-    api.searchProducts(search)
-    .then((data) => setItems(items_filtered(data, currentUser._id)))
-  };
-  
- 
+
+
+// Объявление редакс-диспетчера (им оборачивают функции для обновления хранилища; диспетчер вызывает соответствающий редуктор)
+const dispatch = useDispatch();
+// Объявление селекторов редакса. Селектор - функция, принимающая состояние редакса как аргумент, возвращает данные, полученные из этого состояния.
+const currentUser = useSelector((s) => s.user.data);
+
+const { data: products, favourites } = useSelector((s) => s.products);
+
+//Объявление функции для фильтрации по id автора
+const items_filtered = (products) =>
+products.filter((el) => el.author._id === "63ee212b59b98b038f77b691")
+
+  //Объявление функции для поиска
+const handleSearch = (search) => {
+  api
+    .searchProducts(search)
+    .then((data) => setItems(items_filtered(data, currentUser._id)));
+};
+
+
 // Добавление use-debounce
-  const debounceValueInApp = useDebounce(searchQuery, 500);
-
-  //Добавление и удаление лайка
-   function handleProductLike(product) {
-    const isLiked = findLike(product, currentUser);
-    isLiked 
-    ? api.deleteLike(product._id).then((newItem)=>{
-        const newItems = items.map((el)=> el._id === newItem._id ? newItem : el);
-        setItems(items_filtered(newItems, currentUser._id));
-        setFavourites((state) => state.filter((f) => f._id !== newItem._id))
-    })
-    : api.addLike(product._id).then((newItem)=>{
-      const newItems = items.map((el)=> el._id === newItem._id ? newItem : el);
-      setItems(items_filtered(newItems, currentUser._id));
-      setFavourites((favor) => [...favor, newItem]);
-    });
-    return isLiked;
-}
-  
+const debounceValueInApp = useDebounce(searchQuery, 500);
+// Проверка на статус авторизации, вызов функции с данными пользователя и функции для отображения продуктов
+useEffect(() => {
+  if (!isAuthenticated) {
+    return;
+  }
+  dispatch(fetchUser()).then(() => dispatch(fetchProducts()));
+}, [dispatch, isAuthenticated]);
 
 // Use-effect для поиска
 useEffect(() => {
   if (debounceValueInApp === undefined) return;
   handleSearch(debounceValueInApp);
 }, [debounceValueInApp]);
-// Use-effects для отображения товаров, пользователя, избранного
-  useEffect(() => {
-    Promise.all([api.getUserInfo(), api.getProductList()]).then(
-      ([userData, productData]) => {
-        setCurrentUser(userData);
-        const itemsFiltered = items_filtered(productData.products, userData._id);
-        setItems(itemsFiltered);
-        const fav = itemsFiltered.filter((e) => findLike(e, userData));
-        setFavourites(fav)
-      }
-    );
-  }, [isAuthenticated]);
 
-  //Объявление useNavigate
+//Объявление useNavigate
 const navigate = useNavigate();
 
-
-  // Use-effect для установления статуса аутентификации пользователя
-  useEffect(() => {
-    const token = localStorage.getItem('token')
- const uncodedToken = parseJwt(token);
- if (uncodedToken?._id) {
-   setIsAuthenticated(true)
- }
+// Use-effect для установления статуса авторизация пользователя
+useEffect(() => {
+  const token = localStorage.getItem("token");
+  const uncodedToken = parseJwt(token);
+  if (uncodedToken?._id) {
+    setIsAuthenticated(true);
+  }
 }, [navigate]);
+// Use-effect для фильтрации продуктов по id автора
+useEffect(() => {
+  setItems(products.filter((el) => el.author._id === "63ee212b59b98b038f77b691"));
+}, [products, favourites]);
+
+//Объявление функции для сортировки товаров
+
+const setSortItems = (sortWay) => {
+  switch(sortWay) {
+  case "Сначала дешевые":
+    const sortPrice = items.sort((a, b) => a.price - b.price);
+    setItems([...sortPrice]);
+    break
+  case "Сначала дорогие":
+    const sortExpensive = items.sort((a, b) => b.price - a.price);
+    setItems([...sortExpensive]);
+    break;
+  case "Популярные":
+      const sortPopular = items.sort((a, b) => b.likes.length - a.likes.length);
+      setItems([...sortPopular]);
+    break;
+  case "Новинки":
+      const sortNew = items.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+      setItems([...sortNew]);
+      break;
+  case "По скидке":
+    const sortDiscount = items.sort((a, b) => b.discount - a.discount);
+      setItems([...sortDiscount]);
+      break;
+      default:
+  }
+};
+
+// Функция выхода из аккаунта
+const handleLogout = () => {
+  localStorage.removeItem("token");
+  navigate("/sign-in");
+  setIsAuthenticated(false);
+};
 
 
-  //Объявление функции для сортировки товаров
-  const setSortItems = (sort) => {
-    
-    if (sort === 'Сначала дешевые') {
-      const newItems = items.sort((a,b)=> a.price - b.price);
-      setItems([...newItems]);
+//  Функция для добавления товара в корзину
+const handleAddProductToCart = (product) => {
+  // Создание нового объекта для продукта, помещаемого в корзину. Добавляется счетчик quantity
+  const itemToCart = {
+    id: product._id,
+    name: product.name,
+    pictures: product.pictures,
+    price: product.price,
+    quantity: 1,
+    discount: product.discount
+  };
+  // Флаг
+  let isInCart = false
+  // Если продукт добавлен в корзину
+  toCart.filter(el => {
+      if (el.id === itemToCart.id) {
+      isInCart = true;
+      setToCartCounter((state) => state + 1);
+      openNotification("success","Успешно","Товар добавлен в корзину");
+      return el.quantity++
+      }
+      else return el; 
     }
-    if (sort === 'Сначала дорогие') {
-      const newItems = items.sort((a,b)=> b.price - a.price);
-      setItems([...newItems]);
-    }
-    if (sort === 'Популярные') {
-      const newItems = items.sort((a,b)=> b.likes.length - a.likes.length);
-      setItems([...newItems]);
-    }
-    if (sort === 'Новинки') {
-      const newItems = items.sort((a,b)=> new Date(b.created_at) - new Date(a.created_at));
-      setItems([...newItems]);
-    }
-    if (sort === 'По скидке') {
-      const newItems = items.sort((a,b)=> b.discount - a.discount);
-      setItems([...newItems]);
-    }
+  )
+  // Если продукт не добавлен в корзину
+  if (!isInCart) {
+    setToCart(() => [...toCart, itemToCart]);
+    setToCartCounter((state) => state + 1);
+    openNotification("success","Успешно","Товар добавлен в корзину");
   }
-// Функция выхода из аккаунта 
-  const handleLogout = () => {
-    localStorage.removeItem('token');
-    navigate('/login');
-    setIsAuthenticated(false)
-  }
+};
 
-  //Объявление контекста
-  const contextValue = { 
-    currentUser, 
-    searchQuery, 
-    setSearchQuery, 
-    setParentCounter, 
-    parentCounter, 
-    setSort: setSortItems,
-    isAuthenticated,
-    handleLogout,
-    isAdmin,
-    setIsAdmin }
-  
-  const contextCardValue = { 
-    items: items, 
-    setParentCounter, 
-    parentCounter, 
-    handleProductLike, 
-    favourites,
-    setFavourites,
-    setItems 
-  }
-// Маршрутизация при авторизации 
-  const authRoutes = <> <Route
-    path="login"
-    element={
-      <Modal activeModal={activeModal} setShowModal={setShowModal}>
-        <LogIn setShowModal={setShowModal} />
-      </Modal>
-    }
-  ></Route>
+
+
+
+//Объявление контекста
+const contextUserValue = {
+  currentUser,
+  searchQuery,
+  setSearchQuery,
+  setToCartCounter,
+  toCartCounter,
+  setSort: setSortItems,
+  isAuthenticated,
+  handleLogout,
+};
+
+const contextCardValue = {
+  items: items,
+  setToCartCounter,
+  toCartCounter,
+  setItems,
+  items_filtered,
+  toCart,
+  setToCart,
+  handleAddProductToCart,
+
+};
+
+
+  // Маршрутизация при авторизации
+const authRoutes = (
+  <>
     <Route
-      path="register"
+      path="sign-in"
       element={
-        <Modal activeModal={activeModal} setShowModal={setShowModal}>
-          <Register setShowModal={setShowModal} />
-        </Modal>
+        <Popup activeModal={activeModal} setShowModal={setShowModal}>
+          <SignIn setShowModal={setShowModal} />
+        </Popup>
       }
     ></Route>
     <Route
-      path="reset-password"
+      path="sign-up"
       element={
-        <Modal activeModal={activeModal} setShowModal={setShowModal}>
-          <ResetPassword setShowModal={setShowModal} />
-        </Modal>
+        <Popup activeModal={activeModal} setShowModal={setShowModal}>
+          <SignUp setShowModal={setShowModal} />
+        </Popup>
       }
-    ></Route></>
+    ></Route>
+    <Route
+      path="change-password"
+      element={
+        <Popup activeModal={activeModal} setShowModal={setShowModal}>
+          <ChangePassword setShowModal={setShowModal} />
+        </Popup>
+      }
+    ></Route>
+  </>
+);
 
-
-  //Тело, навигация
+  //Верстка, навигация
   return (
     <>
-    
-    <UserContext.Provider value={contextValue}>
+      <UserContext.Provider value={contextUserValue}>
         <CardContext.Provider value={contextCardValue}>
-    <Header setShowModal={setShowModal}/>   
-    {isAuthenticated ? 
-    <main className='content container'>
-    
-        <Routes>      
-        <Route path='/'
-          element={<HomePage/>}
-          >
-          </Route>
-        <Route
-            path='/catalog'
-            element={<CataloguePage />  }
-      ></Route>
-        <Route
-        path='/private'
-        element={<Private/>}>
-
-        </Route>
-        
-        <Route path='/product/:productId' 
-            element={<ProductPage 
-             />}>
-        </Route>
-        <Route path="faq" element={<FaqPage />}></Route>
-        <Route path="favourites" element={<FavouritePage />}></Route>
-        {authRoutes}
-        <Route path='*' element={
-            <div className='error_not_found_title'>Страница не найдена 
-            <div className='error_not_found_sad_face'></div>
-            <button className='error_not_found_button' 
-            onClick={() => navigate('/')}>На главную
-            </button>
-            </div>}>
-        </Route>
-        <Route path="not_authenticated" element={<NotAuth />}></Route> 
-      </Routes>    
-    </main>  
-    
-    :
-    
-    
-    <div  className="not__auth">Пожалуйста, авторизуйтесь
-    
-      <button className='not_auth_btn' onClick={()=>{navigate('/login')}}> Вход / Регистрация</button>
-      <Routes>
-        {authRoutes}
-      </Routes>
-      </div>
-    
-}
-    <Footer/>
-    </CardContext.Provider>
-    </UserContext.Provider>      
+          <Header setShowModal={setShowModal} />
+          {isAuthenticated ? (
+            <main className="content container">
+              <Routes>
+                {/* Главная */}
+                <Route path="/" element={<HomePage />}></Route>
+                {/* Каталог */}
+                <Route path="/catalog" element={<CataloguePage />}></Route>
+                {/* Личный кабинет */}
+                <Route path="/private" element={<Private />}></Route>
+                {/* Корзина */}
+                <Route
+                  element={<Cart  />}
+                  path="/cart"
+                ></Route>
+                {/* Страница продукта */}
+                <Route
+                  path="/product/:productId"
+                  element={<ProductPage />}
+                ></Route>
+                {/* Часто спрашивают */}
+                <Route path="faq" element={<FaqPage />}></Route>
+                {/* Избранное */}
+                <Route path="favourites" element={<FavouritePage />}></Route>
+                {authRoutes}
+                <Route
+                  path="*"
+                  element={
+                    <div className="error_not_found_title">
+                      Страница не найдена
+                      <div className="error_not_found_sad_face"></div>
+                      <button
+                        className="error_not_found_button"
+                        onClick={() => navigate("/")}
+                      >
+                        На главную
+                      </button>
+                    </div>
+                  }
+                ></Route>
+                <Route path="not_authenticated" element={<NotAuth />}></Route>
+              </Routes>
+            </main>
+          ) : (
+            <div className="not__auth">
+              Пожалуйста, авторизуйтесь
+              <button
+                className="not_auth_btn"
+                onClick={() => {
+                  navigate("/sign-in");
+                }}
+              >
+                {" "}
+                Вход / Регистрация
+              </button>
+              <Routes>{authRoutes}</Routes>
+            </div>
+          )}
+          <Footer />
+        </CardContext.Provider>
+      </UserContext.Provider>
     </>
   );
 }

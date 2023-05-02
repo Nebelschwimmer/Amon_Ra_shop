@@ -1,0 +1,20 @@
+{
+  "files": {
+    "main.css": "/static/css/main.26448f59.css",
+    "main.js": "/static/js/main.2482919b.js",
+    "static/media/pyramid-egypt_bg.jpg": "/static/media/pyramid-egypt_bg.cd691504bbde6670d770.jpg",
+    "static/media/tutankhamun.png": "/static/media/tutankhamun.ba3b212cb05549b8cf58.png",
+    "static/media/sad-face.png": "/static/media/sad-face.0a90f95c349672e69719.png",
+    "static/media/Eye-of-Horus.png": "/static/media/Eye-of-Horus.aee49e22d7fdaeb8540a.png",
+    "static/media/ankh.svg": "/static/media/ankh.bb35b45e8b9c48351e63a4da0e0f47f9.svg",
+    "static/media/like.svg": "/static/media/like.62a542322bdd8f10e345d9abc9a227d7.svg",
+    "index.html": "/index.html",
+    "static/media/star.svg": "/static/media/star.0da9b45616ede6c415e87d78e08e8247.svg",
+    "main.26448f59.css.map": "/static/css/main.26448f59.css.map",
+    "main.2482919b.js.map": "/static/js/main.2482919b.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.26448f59.css",
+    "static/js/main.2482919b.js"
+  ]
+}

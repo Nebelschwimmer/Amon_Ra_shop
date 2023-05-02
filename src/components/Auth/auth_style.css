@@ -49,7 +49,7 @@
     }
     .auth__warning {
       color: red;
-      font-size: 15px;
+      font-size: 13px;
     }
     .auth__back {
       width: fit-content;
