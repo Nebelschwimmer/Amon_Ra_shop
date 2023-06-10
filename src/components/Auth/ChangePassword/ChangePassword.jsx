@@ -18,12 +18,10 @@ export const ChangePassword = ({ setShowModal }) => {
         handleSubmit,
         formState: { errors },
     } = useForm({ mode: "onSubmit" });
-
-
-
     const emailRegister = register("email", {
         required: "Email обязателен",
     });
+    
     const sendData = async (data) => {
       if (!tokenResp) {
           try {

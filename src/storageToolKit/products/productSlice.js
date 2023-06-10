@@ -2,8 +2,8 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { findLike } from "../../utils/utils";
 import { api } from "../../utils/api";
 
-export const fetchProducts = createAsyncThunk(
-  "products/fetchProducts",
+export const getProducts = createAsyncThunk(
+  "products/getProducts",
   async function (
     _,
     { extra: api, fulfillWithValue, rejectWithValue, getState }
@@ -18,8 +18,8 @@ export const fetchProducts = createAsyncThunk(
   }
 );
 
-export const fetchChangeProductLike = createAsyncThunk(
-  "products/fetchChangeProductLike",
+export const getChangedProductLike = createAsyncThunk(
+  "products/getChangedProductLike",
   async function (
     productOutside,
     { rejectWithValue, fulfillWithValue, getState }
@@ -53,24 +53,25 @@ const productSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(fetchProducts.pending, (state) => {
+      .addCase(getProducts.pending, (state) => {
         state.loading = true;
         state.error = null;
       })
-      .addCase(fetchProducts.fulfilled, (state, action) => {
+      .addCase(getProducts.fulfilled, (state, action) => {
         const { total, products, user } = action.payload;
         state.data = products;
         state.total = total;
         state.favourites = products.filter((e) => findLike(e, user));
         state.loading = false;
       })
-      .addCase(fetchChangeProductLike.fulfilled, (state, action) => {
+      .addCase(getChangedProductLike.fulfilled, (state, action) => {
         state.loading = false;
         state.error = null;
         const { product, wasLiked } = action.payload;
 
         state.data = state.data.map((item) => {
-          return item._id === product._id ? product : item;
+          return item._id === product._id 
+          ? product : item;
         });
 
         if (!wasLiked) {

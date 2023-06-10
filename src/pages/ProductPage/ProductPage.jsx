@@ -4,7 +4,7 @@ import { useContext } from 'react';
 import { CardContext } from '../../components/context/card_context';
 import { useEffect, useState } from 'react';
 import { api } from '../../utils/api';
-import { fetchChangeProductLike } from "../../storageToolKit/products/productSlice";
+import { getChangedProductLike } from "../../storageToolKit/products/productSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { findLike } from "../../utils/utils";
 
@@ -29,7 +29,7 @@ export const ProductPage = () => {
   // Функция, срабатывающая при нажатии кнопки лайка
   const onProductLike = () => {
     const wasLiked = findLike(product, currentUser);
-    dispatch(fetchChangeProductLike(product))
+    dispatch(getChangedProductLike(product))
     if (wasLiked) {
       const filteredLikes = product.likes.filter((e) => e !== currentUser._id);
       setProduct({ ...product, likes: filteredLikes });

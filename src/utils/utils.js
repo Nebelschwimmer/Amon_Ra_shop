@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 export const correctGrammarSearch = (number) => {
   const query_number = number % 10;
   if (query_number === 1) return ' товар';
-  if (query_number === 11) return ' товаров';
   if (query_number > 1 && query_number < 5) return ' товара';
   if (query_number > 4 || !query_number) return ' товаров';
 };

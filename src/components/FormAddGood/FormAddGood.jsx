@@ -2,7 +2,6 @@ import { useForm } from "react-hook-form";
 import "./form_add_good.css";
 import { api } from "../../utils/api";
 import { openNotification } from "../Notification/Notification";
-
 import CloseIcon from "@mui/icons-material/Close";
 import { useNavigate } from "react-router-dom";
 import { useContext } from "react";
@@ -16,9 +15,9 @@ const { items, setItems } = useContext(CardContext);
 
 // Создание формы
 const {
-register,
-handleSubmit,
-formState: { errors },
+  register,
+  handleSubmit,
+  formState: { errors },
 } = useForm({ mode: "onSubmit" });
 
 // Функция для отправки формы

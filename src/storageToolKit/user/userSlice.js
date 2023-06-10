@@ -7,8 +7,8 @@ import { openNotification } from "../../components/Notification/Notification";
 // 2-й аргумент - объект с опциями
 
 // Данные пользователя
-export const fetchUser = createAsyncThunk(
-  "user/fetchUser",
+export const getUser = createAsyncThunk(
+  "user/getUser",
   async function (
     dataOutside,
     { getState, fulfillWithValue, rejectWithValue, extra: api }
@@ -22,8 +22,8 @@ export const fetchUser = createAsyncThunk(
   }
 );
 // Обновление данных пользователя
-export const updateUser = createAsyncThunk(
-  "user/updateUser",
+export const changeUserData = createAsyncThunk(
+  "user/changeUserData",
   async function (
     dataOutside,
     { getState, rejectWithValue, fulfillWithValue, extra: api }
@@ -66,15 +66,15 @@ const userSlice = createSlice({
   // Редукторы для асинхронных операций
   extraReducers: (builder) => {
     // Данные пользователя
-    builder.addCase(fetchUser.pending, (state, action) => {
+    builder.addCase(getUser.pending, (state, action) => {
       state.loading = true;
     });
-    builder.addCase(fetchUser.fulfilled, (state, action) => {
+    builder.addCase(getUser.fulfilled, (state, action) => {
       state.data = action.payload;
       state.loading = false;
     });
     // Обновление данных пользователя
-    builder.addCase(updateUser.fulfilled, (state, action) => {
+    builder.addCase(changeUserData.fulfilled, (state, action) => {
       state.data = action.payload;
       state.loading = false;
     });

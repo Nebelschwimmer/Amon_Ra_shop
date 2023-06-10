@@ -1,10 +1,8 @@
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import IconButton from '@mui/material/IconButton';
 import { UserContext } from '../../context/user_context';
-import { CardContext } from '../../context/card_context';
 import React, { useContext, useEffect, useState } from 'react';
 import { useSelector } from "react-redux";
-
 import { Link } from 'react-router-dom';
 
 export  function FavouriteIcon() {  

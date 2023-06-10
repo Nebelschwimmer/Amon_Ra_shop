@@ -1,13 +1,12 @@
-import React, { useEffect, useState } from "react";
 import { ReactComponent as Like } from "./like.svg";
 import "./index.css";
-import { Link, useNavigate } from "react-router-dom";
+import { Link} from "react-router-dom";
 import { CardContext } from "../context/card_context";
 import { findLike } from "../../utils/utils";
 import { changePrice } from "../../utils/utils";
 import { useContext } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchChangeProductLike } from "../../storageToolKit/products/productSlice";
+import { getChangedProductLike } from "../../storageToolKit/products/productSlice";
 import cn from "classnames";
 import { openNotification } from "../Notification/Notification";
 
@@ -29,7 +28,7 @@ const onAddingToCart = () => {
 }
   const isLiked = findLike(product, currentUser);
   const handleLikeClick = () => {
-    dispatch(fetchChangeProductLike(product));
+    dispatch(getChangedProductLike(product));
   };
 
   return (

@@ -80,7 +80,7 @@ export const SignIn = ({ setShowModal }) => {
             className="auth__input"
           />
           {errors?.email && (
-            <span className="auth__info">{errors.email?.message}</span>
+            <span className="auth__warning">{errors.email?.message}</span>
           )}
           <input
             type={type ? "text" : "password"}
@@ -89,7 +89,7 @@ export const SignIn = ({ setShowModal }) => {
             className="auth__input"
           />
           {errors?.password && (
-            <span className="auth__info">{errors.password?.message}</span>
+            <span className="auth__warning">{errors.password?.message}</span>
           )}
           {!errors?.password && (
             <span className="auth__eye_register" onClick={() => setType(!type)}>

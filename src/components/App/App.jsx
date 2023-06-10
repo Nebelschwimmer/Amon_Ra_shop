@@ -1,7 +1,7 @@
+import "./App.css";
 import React, { useEffect, useState } from "react";
 import { Footer } from "../Footer/Footer";
 import { Header } from "../Header/Header";
-import "./App.css";
 import { api } from "../../utils/api";
 import { useDebounce } from "../../utils/utils";
 import { Route, Routes, useNavigate } from "react-router-dom";
@@ -20,8 +20,8 @@ import { ChangePassword } from "../Auth/ChangePassword/ChangePassword";
 import { parseJwt } from "../../utils/parseJWT";
 import { NotAuth } from "../../pages/NotAuth/NotAuth";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchUser } from "../../storageToolKit/user/userSlice";
-import { fetchProducts } from "../../storageToolKit/products/productSlice";
+import { getUser } from "../../storageToolKit/user/userSlice";
+import { getProducts } from "../../storageToolKit/products/productSlice";
 import { Cart} from "../../pages/Cart/Cart";
 import { openNotification } from "../Notification/Notification";
 
@@ -34,9 +34,6 @@ const [toCartCounter, setToCartCounter] = useState(0);
 const [activeModal, setShowModal] = useState(false);
 const [isAuthenticated, setIsAuthenticated] = useState(false);
 const [toCart, setToCart] = useState([]);
-
-
-
 
 // Объявление редакс-диспетчера (им оборачивают функции для обновления хранилища; диспетчер вызывает соответствающий редуктор)
 const dispatch = useDispatch();
@@ -56,7 +53,6 @@ const handleSearch = (search) => {
     .then((data) => setItems(items_filtered(data, currentUser._id)));
 };
 
-
 // Добавление use-debounce
 const debounceValueInApp = useDebounce(searchQuery, 500);
 // Проверка на статус авторизации, вызов функции с данными пользователя и функции для отображения продуктов
@@ -64,7 +60,7 @@ useEffect(() => {
   if (!isAuthenticated) {
     return;
   }
-  dispatch(fetchUser()).then(() => dispatch(fetchProducts()));
+  dispatch(getUser()).then(() => dispatch(getProducts()));
 }, [dispatch, isAuthenticated]);
 
 // Use-effect для поиска
@@ -135,6 +131,7 @@ const handleAddProductToCart = (product) => {
     price: product.price,
     quantity: 1,
     discount: product.discount
+
   };
   // Флаг
   let isInCart = false
@@ -156,9 +153,6 @@ const handleAddProductToCart = (product) => {
     openNotification("success","Успешно","Товар добавлен в корзину");
   }
 };
-
-
-
 
 //Объявление контекста
 const contextUserValue = {
@@ -183,7 +177,6 @@ const contextCardValue = {
   handleAddProductToCart,
 
 };
-
 
   // Маршрутизация при авторизации
 const authRoutes = (

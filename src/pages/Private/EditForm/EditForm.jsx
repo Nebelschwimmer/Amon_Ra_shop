@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
 import { EditFormBase } from "./EditFormBase";
 import { useDispatch, useSelector } from "react-redux";
-import { updateUser } from "../../../storageToolKit/user/userSlice";
+import { changeUserData } from "../../../storageToolKit/user/userSlice";
 
 export const EditForm = () => {
 const currentUser = useSelector((s) => s.user.data);
@@ -15,7 +15,7 @@ formState: { errors },
 const dispatch = useDispatch();
 
 const sendProfileData = async (data) => {
-await dispatch(updateUser({ name: data.name, about: data.about }));
+await dispatch(changeUserData({ name: data.name, about: data.about }));
 };
 
 const required = {
@@ -25,7 +25,7 @@ required: {
 };
 
 const sendAvatar = async ({ avatar }) => {
-await dispatch(updateUser({ avatar: avatar }));
+await dispatch(changeUserData({ avatar: avatar }));
 };
 
 return (

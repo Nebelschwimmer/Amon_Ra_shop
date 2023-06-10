@@ -4,21 +4,24 @@ import cn from "classnames";
 import s from "./rating.module.css";
 
 export const Rating = ({ rate, setRate, isEditable = false }) => {
+// Создание пустого массива длинной в 5 элементов
 const emptyTags = new Array(5).fill(<></>);
+// Стейт для массива рейтинга; изначальное значение - пустой массив emptyTags
 const [ratingArray, setRatingArray] = useState(emptyTags);
-
+// Функция для изменения рейтинга при наведению мышью
 const changeRatingDisplay = (rate) => {
     if (!isEditable) return;
     buildRating(rate);
 };
-
+// Функция для изменения рейтинга на клик
 const changeRating = (r) => {
     if (!isEditable) return;
     setRate(r);
 };
-
+// Функция построения рейтинга
 const buildRating = (rating) => {
-    const updatedRatingArray = ratingArray.map((ratingEl, index) => (
+  // "Размпамиваем" массив, который имеется в стейте  ratingArray, далее "сетим его"
+  const updatedRatingArray = ratingArray.map((el, index) => (
     <Star
         className={cn(s.star, {
         [s.filled]: index < rating,
@@ -31,15 +34,15 @@ const buildRating = (rating) => {
     ));
     setRatingArray(updatedRatingArray);
 };
-
+// Use-effect для слежения за стейтом rate
 useEffect(() => {
   buildRating(rate);
 }, [rate]);
-
+// Весртка
 return (
     <div>
-    {ratingArray.map((e, i) => (
-        <span key={i}>{e}</span>
+    {ratingArray.map((el, index) => (
+        <span key={index}>{el}</span>
     ))}
     </div>
 );

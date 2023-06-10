@@ -66,9 +66,6 @@ export const Header = ({setShowModal}) => {
                   </ModalEditProduct>}
               </div>
               }
-
-
-
             </div>
             
       </div>  
